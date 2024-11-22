@@ -97,13 +97,30 @@ token:
   # 令牌有效期（默认30分钟）
   expireTime: 30
   
-# MyBatis配置
-mybatis:
-  # 搜索指定包别名
-  typeAliasesPackage: com.ruoyi.project.**.domain
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+## MyBatis配置
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.ruoyi.project.**.domain
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml
+
+mybatis-plus:
+  # 配置别名扫描的包
+#  typeAliasesPackage: com.ruoyi.project.**.domain
+  typeAliasesPackage: com.ruoyi.**.domain
+  # 配置mapper.xml的位置
   mapperLocations: classpath*:mybatis/**/*Mapper.xml
-  # 加载全局的配置文件
+  # 配置全局配置文件的路径
+  global-config:
+    # 配置主键策略，自动生成主键
+    db-config:
+      id-type: none
+      # 配置逻辑删除的字段
+      logic-delete-field-name: is_deleted
+      # 配置逻辑删除的字段值
+      logic-delete-value: 1
   configLocation: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
