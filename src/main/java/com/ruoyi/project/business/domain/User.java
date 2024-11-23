@@ -1,4 +1,4 @@
-package com.ruoyi.business.domain;
+package com.ruoyi.project.business.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

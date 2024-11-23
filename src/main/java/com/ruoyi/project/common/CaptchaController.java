@@ -1,16 +1,5 @@
 package com.ruoyi.project.common;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.FastByteArrayOutputStream;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.Producer;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
@@ -19,6 +8,19 @@ import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.service.ISysConfigService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.FastByteArrayOutputStream;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码操作处理
@@ -26,6 +28,7 @@ import com.ruoyi.project.system.service.ISysConfigService;
  * @author ruoyi
  */
 @RestController
+@Slf4j
 public class CaptchaController
 {
     @Resource(name = "captchaProducer")
@@ -53,22 +56,22 @@ public class CaptchaController
         AjaxResult ajax = AjaxResult.success();
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         ajax.put("captchaEnabled", captchaEnabled);
+        //如果后台生成验证码，那么这边则不会进入
         if (!captchaEnabled)
         {
             return ajax;
         }
-
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
-
+        
         String capStr = null, code = null;
         BufferedImage image = null;
-
         // 生成验证码
         if ("math".equals(captchaType))
         {
             String capText = captchaProducerMath.createText();
+            log.info("Math captcha text: {}", capText);
             capStr = capText.substring(0, capText.lastIndexOf("@"));
             code = capText.substring(capText.lastIndexOf("@") + 1);
             image = captchaProducerMath.createImage(capStr);
@@ -78,7 +81,6 @@ public class CaptchaController
             capStr = code = captchaProducer.createText();
             image = captchaProducer.createImage(capStr);
         }
-
         redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
@@ -90,7 +92,6 @@ public class CaptchaController
         {
             return AjaxResult.error(e.getMessage());
         }
-
         ajax.put("uuid", uuid);
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;

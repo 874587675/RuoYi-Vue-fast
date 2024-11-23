@@ -1,9 +1,9 @@
-package com.ruoyi.business.service.impl;
+package com.ruoyi.project.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ruoyi.business.domain.User;
-import com.ruoyi.business.mapper.UserMapper;
-import com.ruoyi.business.service.UserService;
+import com.ruoyi.project.business.domain.User;
+import com.ruoyi.project.business.mapper.UserMapper;
+import com.ruoyi.project.business.service.UserService;
 import org.springframework.stereotype.Service;
 /**
 * @program: RuoYi-Vue-fast

@@ -1,11 +1,5 @@
 package com.ruoyi.common.utils.file;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Objects;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.exception.file.FileNameLengthLimitExceededException;
 import com.ruoyi.common.exception.file.FileSizeLimitExceededException;
@@ -14,6 +8,14 @@ import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.uuid.Seq;
 import com.ruoyi.framework.config.RuoYiConfig;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 文件上传工具类
@@ -168,22 +170,22 @@ public class FileUploadUtils
         String extension = getExtension(file);
         if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension))
         {
-            if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION)
+            if (Arrays.equals(allowedExtension, MimeTypeUtils.IMAGE_EXTENSION))
             {
                 throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
                         fileName);
             }
-            else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION)
+            else if (Arrays.equals(allowedExtension ,MimeTypeUtils.FLASH_EXTENSION))
             {
                 throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
                         fileName);
             }
-            else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION)
+            else if (Arrays.equals(allowedExtension,MimeTypeUtils.MEDIA_EXTENSION))
             {
                 throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
                         fileName);
             }
-            else if (allowedExtension == MimeTypeUtils.VIDEO_EXTENSION)
+            else if (Arrays.equals(allowedExtension , MimeTypeUtils.VIDEO_EXTENSION))
             {
                 throw new InvalidExtensionException.InvalidVideoExtensionException(allowedExtension, extension,
                         fileName);

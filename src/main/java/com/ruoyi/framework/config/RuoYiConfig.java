@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
  * 读取项目相关配置
  * 
  * @author ruoyi
+ * 
+ * 批量映射：@ConfigurationProperties 可以一次性将配置文件中的多个属性映射到一个 Java 对象中，而不需要用 @Value注解对每个字段单独进行注解。
+ * 嵌套支持：它支持将配置文件中的嵌套属性自动映射成 Java 对象中的嵌套对象，非常适合复杂配置的场景。
+ * 类型安全：它支持类型转换并且更加清晰，因为它可以一次性映射到整个配置对象。
  */
 @Component
 @ConfigurationProperties(prefix = "ruoyi")

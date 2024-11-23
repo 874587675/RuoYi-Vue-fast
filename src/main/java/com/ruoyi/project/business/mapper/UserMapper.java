@@ -1,7 +1,7 @@
-package com.ruoyi.business.mapper;
+package com.ruoyi.project.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ruoyi.business.domain.User;
+import com.ruoyi.project.business.domain.User;
 
 /**
  * @program: RuoYi-Vue-fast
