@@ -1,49 +1,39 @@
-package com.ruoyi.project.monitor.controller;
+    package com.ruoyi.project.monitor.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.project.monitor.domain.SysCache;
+    import com.ruoyi.common.constant.CacheConstants;
+    import com.ruoyi.common.utils.StringUtils;
+    import com.ruoyi.framework.web.domain.AjaxResult;
+    import com.ruoyi.project.monitor.domain.SysCache;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.data.redis.core.RedisCallback;
+    import org.springframework.data.redis.core.RedisTemplate;
+    import org.springframework.security.access.prepost.PreAuthorize;
+    import org.springframework.web.bind.annotation.*;
 
-/**
- * 缓存监控
- * 
- * @author ruoyi
- */
-@RestController
-@RequestMapping("/monitor/cache")
-public class CacheController
-{
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
-    private final static List<SysCache> caches = new ArrayList<SysCache>();
+    import java.util.*;
+    
+    /**
+     * 缓存监控
+     * 
+     * @author ruoyi
+     */
+    @RestController
+    @RequestMapping("/monitor/cache")
+    public class CacheController
     {
-        caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
-        caches.add(new SysCache(CacheConstants.SYS_CONFIG_KEY, "配置信息"));
-        caches.add(new SysCache(CacheConstants.SYS_DICT_KEY, "数据字典"));
-        caches.add(new SysCache(CacheConstants.CAPTCHA_CODE_KEY, "验证码"));
-        caches.add(new SysCache(CacheConstants.REPEAT_SUBMIT_KEY, "防重提交"));
-        caches.add(new SysCache(CacheConstants.RATE_LIMIT_KEY, "限流处理"));
-        caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
-    }
+        @Autowired
+        private RedisTemplate<String, String> redisTemplate;
+    
+        private final static List<SysCache> caches = new ArrayList<SysCache>();
+        {
+            caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
+            caches.add(new SysCache(CacheConstants.SYS_CONFIG_KEY, "配置信息"));
+            caches.add(new SysCache(CacheConstants.SYS_DICT_KEY, "数据字典"));
+            caches.add(new SysCache(CacheConstants.CAPTCHA_CODE_KEY, "验证码"));
+            caches.add(new SysCache(CacheConstants.REPEAT_SUBMIT_KEY, "防重提交"));
+            caches.add(new SysCache(CacheConstants.RATE_LIMIT_KEY, "限流处理"));
+            caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
+        }
 
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping()
