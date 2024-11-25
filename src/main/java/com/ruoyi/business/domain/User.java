@@ -30,7 +30,7 @@ public class User implements Serializable {
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.NONE)
+    @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "编号")
     private Integer id;
 
