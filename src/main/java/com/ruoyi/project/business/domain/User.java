@@ -6,38 +6,40 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @program: RuoYi-Vue-fast
+ * @ClassName User
+ * @description:
+ * @author: zgc
+ * @date: 2024-11-22 16:10
+ * @Version 1.0
+ **/
 @ApiModel(description = "t_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_user")
-public class User {
-    private static final long serialVersionUID = 1L;
+public class User implements Serializable {
     /**
-     * 用户编号
+     * 编号
      */
-    @TableId(value = "id", type = IdType.NONE)
-    @ApiModelProperty(value = "用户编号")
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty(value = "编号")
+    private Integer id;
 
     /**
-     * 微信编号openId
+     * 名字
      */
-    @TableField(value = "open_id")
-    @ApiModelProperty(value = "微信编号openId")
-    private String openId;
-
-    /**
-     * 用户名
-     */
-    @TableField(value = "username")
-    @ApiModelProperty(value = "用户名")
-    private String username;
+    @TableField(value = "`name`")
+    @ApiModelProperty(value = "名字")
+    private String name;
 
     /**
      * 密码
@@ -45,20 +47,6 @@ public class User {
     @TableField(value = "`password`")
     @ApiModelProperty(value = "密码")
     private String password;
-
-    /**
-     * 头像
-     */
-    @TableField(value = "avatar")
-    @ApiModelProperty(value = "头像")
-    private String avatar;
-
-    /**
-     * 手机号
-     */
-    @TableField(value = "phone")
-    @ApiModelProperty(value = "手机号")
-    private String phone;
 
     /**
      * 创建时间
@@ -73,4 +61,6 @@ public class User {
     @TableField(value = "update_time")
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
+
+    private static final long serialVersionUID = 1L;
 }

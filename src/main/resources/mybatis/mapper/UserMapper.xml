@@ -4,17 +4,14 @@
   <resultMap id="BaseResultMap" type="com.ruoyi.project.business.domain.User">
     <!--@mbg.generated-->
     <!--@Table t_user-->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="open_id" jdbcType="VARCHAR" property="openId" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, open_id, username, `password`, avatar, phone, create_time, update_time
+    id, `name`, `password`, create_time, update_time
   </sql>
 </mapper>
