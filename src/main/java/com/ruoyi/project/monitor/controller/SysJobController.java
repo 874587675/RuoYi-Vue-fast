@@ -25,7 +25,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.domain.SysJob;
-import com.ruoyi.project.monitor.service.ISysJobService;
+import com.ruoyi.project.monitor.service.SysJobService;
 
 /**
  * 调度任务信息操作处理
@@ -37,7 +37,7 @@ import com.ruoyi.project.monitor.service.ISysJobService;
 public class SysJobController extends BaseController
 {
     @Autowired
-    private ISysJobService jobService;
+    private SysJobService jobService;
 
     /**
      * 查询定时任务列表

@@ -9,7 +9,7 @@ import com.ruoyi.framework.security.RegisterBody;
 import com.ruoyi.framework.security.service.SysRegisterService;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.project.system.service.ISysConfigService;
+import com.ruoyi.project.system.service.SysConfigService;
 
 /**
  * 注册验证
@@ -23,7 +23,7 @@ public class SysRegisterController extends BaseController
     private SysRegisterService registerService;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @PostMapping("/register")
     public AjaxResult register(@RequestBody RegisterBody user)

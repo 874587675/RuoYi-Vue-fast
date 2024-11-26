@@ -19,7 +19,7 @@ import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.domain.SysMenu;
-import com.ruoyi.project.system.service.ISysMenuService;
+import com.ruoyi.project.system.service.SysMenuService;
 
 /**
  * 菜单信息
@@ -31,7 +31,7 @@ import com.ruoyi.project.system.service.ISysMenuService;
 public class SysMenuController extends BaseController
 {
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取菜单列表

@@ -18,7 +18,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.domain.SysLogininfor;
-import com.ruoyi.project.monitor.service.ISysLogininforService;
+import com.ruoyi.project.monitor.service.SysLogininforService;
 
 /**
  * 系统访问记录
@@ -30,7 +30,7 @@ import com.ruoyi.project.monitor.service.ISysLogininforService;
 public class SysLogininforController extends BaseController
 {
     @Autowired
-    private ISysLogininforService logininforService;
+    private SysLogininforService logininforService;
 
     @Autowired
     private SysPasswordService passwordService;

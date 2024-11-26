@@ -7,7 +7,7 @@ import com.ruoyi.common.utils.sign.Base64;
 import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.project.system.service.ISysConfigService;
+import com.ruoyi.project.system.service.SysConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class CaptchaController
     private String captchaType;
     
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 生成验证码

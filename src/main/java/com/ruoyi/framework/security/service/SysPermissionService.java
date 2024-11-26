@@ -10,8 +10,8 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.project.system.domain.SysRole;
 import com.ruoyi.project.system.domain.SysUser;
-import com.ruoyi.project.system.service.ISysMenuService;
-import com.ruoyi.project.system.service.ISysRoleService;
+import com.ruoyi.project.system.service.SysMenuService;
+import com.ruoyi.project.system.service.SysRoleService;
 
 /**
  * 用户权限处理
@@ -22,10 +22,10 @@ import com.ruoyi.project.system.service.ISysRoleService;
 public class SysPermissionService
 {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取角色数据权限

@@ -19,7 +19,7 @@ import com.ruoyi.project.system.domain.SysRole;
 import com.ruoyi.project.system.domain.SysUser;
 import com.ruoyi.project.system.mapper.SysDeptMapper;
 import com.ruoyi.project.system.mapper.SysRoleMapper;
-import com.ruoyi.project.system.service.ISysDeptService;
+import com.ruoyi.project.system.service.SysDeptService;
 
 /**
  * 部门管理 服务实现
@@ -27,7 +27,7 @@ import com.ruoyi.project.system.service.ISysDeptService;
  * @author ruoyi
  */
 @Service
-public class SysDeptServiceImpl implements ISysDeptService
+public class SysDeptServiceImpl implements SysDeptService
 {
     @Autowired
     private SysDeptMapper deptMapper;

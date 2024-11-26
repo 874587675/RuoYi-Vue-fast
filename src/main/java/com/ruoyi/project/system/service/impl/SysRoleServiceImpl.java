@@ -23,7 +23,7 @@ import com.ruoyi.project.system.mapper.SysRoleDeptMapper;
 import com.ruoyi.project.system.mapper.SysRoleMapper;
 import com.ruoyi.project.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.project.system.mapper.SysUserRoleMapper;
-import com.ruoyi.project.system.service.ISysRoleService;
+import com.ruoyi.project.system.service.SysRoleService;
 
 /**
  * 角色 业务层处理
@@ -31,7 +31,7 @@ import com.ruoyi.project.system.service.ISysRoleService;
  * @author ruoyi
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService
+public class SysRoleServiceImpl implements SysRoleService
 {
     @Autowired
     private SysRoleMapper roleMapper;

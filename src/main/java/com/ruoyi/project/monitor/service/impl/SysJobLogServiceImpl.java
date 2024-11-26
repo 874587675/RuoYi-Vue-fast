@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.monitor.domain.SysJobLog;
 import com.ruoyi.project.monitor.mapper.SysJobLogMapper;
-import com.ruoyi.project.monitor.service.ISysJobLogService;
+import com.ruoyi.project.monitor.service.SysJobLogService;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -13,7 +13,7 @@ import com.ruoyi.project.monitor.service.ISysJobLogService;
  * @author ruoyi
  */
 @Service
-public class SysJobLogServiceImpl implements ISysJobLogService
+public class SysJobLogServiceImpl implements SysJobLogService
 {
     @Autowired
     private SysJobLogMapper jobLogMapper;

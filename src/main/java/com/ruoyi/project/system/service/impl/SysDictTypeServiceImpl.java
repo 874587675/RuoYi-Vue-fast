@@ -16,7 +16,7 @@ import com.ruoyi.project.system.domain.SysDictData;
 import com.ruoyi.project.system.domain.SysDictType;
 import com.ruoyi.project.system.mapper.SysDictDataMapper;
 import com.ruoyi.project.system.mapper.SysDictTypeMapper;
-import com.ruoyi.project.system.service.ISysDictTypeService;
+import com.ruoyi.project.system.service.SysDictTypeService;
 
 /**
  * 字典 业务层处理
@@ -24,7 +24,7 @@ import com.ruoyi.project.system.service.ISysDictTypeService;
  * @author ruoyi
  */
 @Service
-public class SysDictTypeServiceImpl implements ISysDictTypeService
+public class SysDictTypeServiceImpl implements SysDictTypeService
 {
     @Autowired
     private SysDictTypeMapper dictTypeMapper;

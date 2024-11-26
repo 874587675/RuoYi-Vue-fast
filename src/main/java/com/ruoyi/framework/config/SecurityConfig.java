@@ -7,6 +7,9 @@ import com.ruoyi.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,19 +25,22 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * spring security配置
- * 
+ *
  * @author ruoyi
  */
+
+//@PreAuthorize 注解在方法调用之前进行权限检查，通常用于基于方法的权限控制。例如，检查用户是否有特定的角色或权限，或者检查方法参数的内容。
+//@PostAuthorize 注解在方法调用之后进行权限检查，可以用于检查方法执行完之后的结果。例如，检查返回的数据是否符合某些权限要求。
+//@Secured 注解用于标注方法，表示该方法只有具备某些指定角色的用户才能访问。它通常用于较为简单的角色检查。
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Configuration
-public class SecurityConfig
-{
+public class SecurityConfig {
     /**
      * 自定义用户认证逻辑
      */
     @Autowired
     private UserDetailsService userDetailsService;
-    
+
     /**
      * 认证失败处理类
      */
@@ -52,7 +58,7 @@ public class SecurityConfig
      */
     @Autowired
     private JwtAuthenticationTokenFilter authenticationTokenFilter;
-    
+
     /**
      * 跨域过滤器
      */
@@ -69,8 +75,7 @@ public class SecurityConfig
      * 身份验证实现
      */
     @Bean
-    public AuthenticationManager authenticationManager()
-    {
+    public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
@@ -93,46 +98,44 @@ public class SecurityConfig
      * authenticated       |   用户登录后可访问
      */
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception
-    {
+    protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-            // CSRF禁用，因为不使用session
-            .csrf(csrf -> csrf.disable())
-            // 禁用HTTP响应标头
-            .headers((headersCustomizer) -> {
-                headersCustomizer.cacheControl(cache -> cache.disable()).frameOptions(options -> options.sameOrigin());
-            })
-            // 认证失败处理类
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            // 基于token，所以不需要session
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // 注解标记允许匿名访问的url
-            .authorizeHttpRequests((requests) -> {
-                permitAllUrl.getUrls().forEach(url -> requests.antMatchers(url).permitAll());
-                // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                requests.antMatchers("/login", "/register", "/captchaImage","/**").permitAll()
+                // CSRF禁用，因为不使用session
+                .csrf(csrf -> csrf.disable())
+                // 禁用HTTP响应标头
+                .headers((headersCustomizer) -> {
+                    headersCustomizer.cacheControl(cache -> cache.disable()).frameOptions(options -> options.sameOrigin());
+                })
+                // 认证失败处理类
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                // 基于token，所以不需要session
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 注解标记允许匿名访问的url
+                .authorizeHttpRequests((requests) -> {
+                    permitAllUrl.getUrls().forEach(url -> requests.antMatchers(url).permitAll());
+                    // 对于登录login 注册register 验证码captchaImage 允许匿名访问
+                    requests.antMatchers("/login", "/register", "/captchaImage", "/**").permitAll()
 //                    // 静态资源，可匿名访问+
 //                    .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
 //                    .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
 //                    // 除上面外的所有请求全部需要鉴权认证
-                    .anyRequest().authenticated();
-            })
-            // 添加Logout filter
-            .logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler))
-            // 添加JWT filter
-            .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-            // 添加CORS filter
-            .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class)
-            .addFilterBefore(corsFilter, LogoutFilter.class)
-            .build();
+                            .anyRequest().authenticated();
+                })
+                // 添加Logout filter
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler))
+                // 添加JWT filter
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                // 添加CORS filter
+                .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class)
+                .addFilterBefore(corsFilter, LogoutFilter.class)
+                .build();
     }
 
     /**
      * 强散列哈希加密实现
      */
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder()
-    {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -20,7 +20,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.domain.SysDictType;
-import com.ruoyi.project.system.service.ISysDictTypeService;
+import com.ruoyi.project.system.service.SysDictTypeService;
 
 /**
  * 数据字典信息
@@ -32,7 +32,7 @@ import com.ruoyi.project.system.service.ISysDictTypeService;
 public class SysDictTypeController extends BaseController
 {
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")

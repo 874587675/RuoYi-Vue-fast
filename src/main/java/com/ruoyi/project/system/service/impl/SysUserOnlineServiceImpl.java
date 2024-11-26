@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.security.LoginUser;
 import com.ruoyi.project.monitor.domain.SysUserOnline;
-import com.ruoyi.project.system.service.ISysUserOnlineService;
+import com.ruoyi.project.system.service.SysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
@@ -12,7 +12,7 @@ import com.ruoyi.project.system.service.ISysUserOnlineService;
  * @author ruoyi
  */
 @Service
-public class SysUserOnlineServiceImpl implements ISysUserOnlineService
+public class SysUserOnlineServiceImpl implements SysUserOnlineService
 {
     /**
      * 通过登录地址查询信息

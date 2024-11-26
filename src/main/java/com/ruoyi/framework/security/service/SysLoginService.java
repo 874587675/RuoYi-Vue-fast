@@ -15,8 +15,8 @@ import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.framework.security.LoginUser;
 import com.ruoyi.framework.security.context.AuthenticationContextHolder;
 import com.ruoyi.project.system.domain.SysUser;
-import com.ruoyi.project.system.service.ISysConfigService;
-import com.ruoyi.project.system.service.ISysUserService;
+import com.ruoyi.project.system.service.SysConfigService;
+import com.ruoyi.project.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,10 +46,10 @@ public class SysLoginService
     private RedisCache redisCache;
 
     @Autowired
-    private ISysUserService userService;
+    private SysUserService sysUserService;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 登录验证
@@ -176,6 +176,6 @@ public class SysLoginService
         sysUser.setUserId(userId);
         sysUser.setLoginIp(IpUtils.getIpAddr());
         sysUser.setLoginDate(DateUtils.getNowDate());
-        userService.updateUserProfile(sysUser);
+        sysUserService.updateUserProfile(sysUser);
     }
 }

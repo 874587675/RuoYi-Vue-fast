@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.common.utils.DictUtils;
 import com.ruoyi.project.system.domain.SysDictData;
 import com.ruoyi.project.system.mapper.SysDictDataMapper;
-import com.ruoyi.project.system.service.ISysDictDataService;
+import com.ruoyi.project.system.service.SysDictDataService;
 
 /**
  * 字典 业务层处理
@@ -14,7 +14,7 @@ import com.ruoyi.project.system.service.ISysDictDataService;
  * @author ruoyi
  */
 @Service
-public class SysDictDataServiceImpl implements ISysDictDataService
+public class SysDictDataServiceImpl implements SysDictDataService
 {
     @Autowired
     private SysDictDataMapper dictDataMapper;

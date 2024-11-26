@@ -17,7 +17,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.domain.SysJobLog;
-import com.ruoyi.project.monitor.service.ISysJobLogService;
+import com.ruoyi.project.monitor.service.SysJobLogService;
 
 /**
  * 调度日志操作处理
@@ -29,7 +29,7 @@ import com.ruoyi.project.monitor.service.ISysJobLogService;
 public class SysJobLogController extends BaseController
 {
     @Autowired
-    private ISysJobLogService jobLogService;
+    private SysJobLogService jobLogService;
 
     /**
      * 查询定时任务调度日志列表

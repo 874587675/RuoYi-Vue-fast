@@ -21,7 +21,7 @@ import com.ruoyi.framework.security.service.TokenService;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.domain.SysUser;
-import com.ruoyi.project.system.service.ISysUserService;
+import com.ruoyi.project.system.service.SysUserService;
 
 /**
  * 个人信息 业务处理
@@ -33,7 +33,7 @@ import com.ruoyi.project.system.service.ISysUserService;
 public class SysProfileController extends BaseController
 {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService sysUserService;
 
     @Autowired
     private TokenService tokenService;
@@ -47,8 +47,8 @@ public class SysProfileController extends BaseController
         LoginUser loginUser = getLoginUser();
         SysUser user = loginUser.getUser();
         AjaxResult ajax = AjaxResult.success(user);
-        ajax.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
-        ajax.put("postGroup", userService.selectUserPostGroup(loginUser.getUsername()));
+        ajax.put("roleGroup", sysUserService.selectUserRoleGroup(loginUser.getUsername()));
+        ajax.put("postGroup", sysUserService.selectUserPostGroup(loginUser.getUsername()));
         return ajax;
     }
 
@@ -65,15 +65,15 @@ public class SysProfileController extends BaseController
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
-        if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(currentUser))
+        if (StringUtils.isNotEmpty(user.getPhonenumber()) && !sysUserService.checkPhoneUnique(currentUser))
         {
             return error("修改用户'" + loginUser.getUsername() + "'失败，手机号码已存在");
         }
-        if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(currentUser))
+        if (StringUtils.isNotEmpty(user.getEmail()) && !sysUserService.checkEmailUnique(currentUser))
         {
             return error("修改用户'" + loginUser.getUsername() + "'失败，邮箱账号已存在");
         }
-        if (userService.updateUserProfile(currentUser) > 0)
+        if (sysUserService.updateUserProfile(currentUser) > 0)
         {
             // 更新缓存用户信息
             tokenService.setLoginUser(loginUser);
@@ -101,7 +101,7 @@ public class SysProfileController extends BaseController
             return error("新密码不能与旧密码相同");
         }
         newPassword = SecurityUtils.encryptPassword(newPassword);
-        if (userService.resetUserPwd(userName, newPassword) > 0)
+        if (sysUserService.resetUserPwd(userName, newPassword) > 0)
         {
             // 更新缓存用户密码
             loginUser.getUser().setPassword(newPassword);
@@ -122,7 +122,7 @@ public class SysProfileController extends BaseController
         {
             LoginUser loginUser = getLoginUser();
             String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
+            if (sysUserService.updateUserAvatar(loginUser.getUsername(), avatar))
             {
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", avatar);

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.monitor.domain.SysOperLog;
 import com.ruoyi.project.monitor.mapper.SysOperLogMapper;
-import com.ruoyi.project.monitor.service.ISysOperLogService;
+import com.ruoyi.project.monitor.service.SysOperLogService;
 
 /**
  * 操作日志 服务层处理
@@ -13,7 +13,7 @@ import com.ruoyi.project.monitor.service.ISysOperLogService;
  * @author ruoyi
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService
+public class SysOperLogServiceImpl implements SysOperLogService
 {
     @Autowired
     private SysOperLogMapper operLogMapper;

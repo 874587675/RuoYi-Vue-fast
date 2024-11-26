@@ -17,7 +17,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.domain.SysOperLog;
-import com.ruoyi.project.monitor.service.ISysOperLogService;
+import com.ruoyi.project.monitor.service.SysOperLogService;
 
 /**
  * 操作日志记录
@@ -29,7 +29,7 @@ import com.ruoyi.project.monitor.service.ISysOperLogService;
 public class SysOperlogController extends BaseController
 {
     @Autowired
-    private ISysOperLogService operLogService;
+    private SysOperLogService operLogService;
 
     @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
     @GetMapping("/list")

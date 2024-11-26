@@ -20,7 +20,7 @@ import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.system.domain.SysDept;
-import com.ruoyi.project.system.service.ISysDeptService;
+import com.ruoyi.project.system.service.SysDeptService;
 
 /**
  * 部门信息
@@ -32,7 +32,7 @@ import com.ruoyi.project.system.service.ISysDeptService;
 public class SysDeptController extends BaseController
 {
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     /**
      * 获取部门列表

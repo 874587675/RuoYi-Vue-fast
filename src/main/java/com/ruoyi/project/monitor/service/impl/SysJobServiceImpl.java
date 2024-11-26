@@ -15,7 +15,7 @@ import com.ruoyi.common.utils.job.CronUtils;
 import com.ruoyi.common.utils.job.ScheduleUtils;
 import com.ruoyi.project.monitor.domain.SysJob;
 import com.ruoyi.project.monitor.mapper.SysJobMapper;
-import com.ruoyi.project.monitor.service.ISysJobService;
+import com.ruoyi.project.monitor.service.SysJobService;
 
 /**
  * 定时任务调度信息 服务层
@@ -23,7 +23,7 @@ import com.ruoyi.project.monitor.service.ISysJobService;
  * @author ruoyi
  */
 @Service
-public class SysJobServiceImpl implements ISysJobService
+public class SysJobServiceImpl implements SysJobService
 {
     @Autowired
     private Scheduler scheduler;

@@ -3,6 +3,10 @@ package com.ruoyi.project.system.domain;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.xss.Xss;
@@ -17,6 +21,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@Data
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -36,7 +41,7 @@ public class SysUser extends BaseEntity
     /** 用户昵称 */
     @Excel(name = "用户名称")
     private String nickName;
-
+    
     /** 用户邮箱 */
     @Excel(name = "用户邮箱")
     private String email;

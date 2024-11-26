@@ -23,7 +23,7 @@ import com.ruoyi.project.system.domain.vo.RouterVo;
 import com.ruoyi.project.system.mapper.SysMenuMapper;
 import com.ruoyi.project.system.mapper.SysRoleMapper;
 import com.ruoyi.project.system.mapper.SysRoleMenuMapper;
-import com.ruoyi.project.system.service.ISysMenuService;
+import com.ruoyi.project.system.service.SysMenuService;
 
 /**
  * 菜单 业务层处理
@@ -31,7 +31,7 @@ import com.ruoyi.project.system.service.ISysMenuService;
  * @author ruoyi
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService
+public class SysMenuServiceImpl implements SysMenuService
 {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 

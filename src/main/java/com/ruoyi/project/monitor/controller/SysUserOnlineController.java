@@ -21,7 +21,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.monitor.domain.SysUserOnline;
-import com.ruoyi.project.system.service.ISysUserOnlineService;
+import com.ruoyi.project.system.service.SysUserOnlineService;
 
 /**
  * 在线用户监控
@@ -33,7 +33,7 @@ import com.ruoyi.project.system.service.ISysUserOnlineService;
 public class SysUserOnlineController extends BaseController
 {
     @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private SysUserOnlineService userOnlineService;
 
     @Autowired
     private RedisCache redisCache;

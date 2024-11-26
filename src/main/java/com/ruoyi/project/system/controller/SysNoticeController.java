@@ -18,7 +18,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.domain.SysNotice;
-import com.ruoyi.project.system.service.ISysNoticeService;
+import com.ruoyi.project.system.service.SysNoticeService;
 
 /**
  * 公告 信息操作处理
@@ -30,7 +30,7 @@ import com.ruoyi.project.system.service.ISysNoticeService;
 public class SysNoticeController extends BaseController
 {
     @Autowired
-    private ISysNoticeService noticeService;
+    private SysNoticeService noticeService;
 
     /**
      * 获取通知公告列表

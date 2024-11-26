@@ -8,7 +8,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.project.system.domain.SysConfig;
 import com.ruoyi.project.system.mapper.SysConfigMapper;
-import com.ruoyi.project.system.service.ISysConfigService;
+import com.ruoyi.project.system.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Service
-public class SysConfigServiceImpl implements ISysConfigService {
+public class SysConfigServiceImpl implements SysConfigService {
     @Autowired
     private SysConfigMapper configMapper;
 

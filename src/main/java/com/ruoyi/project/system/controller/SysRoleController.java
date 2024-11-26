@@ -27,9 +27,9 @@ import com.ruoyi.project.system.domain.SysDept;
 import com.ruoyi.project.system.domain.SysRole;
 import com.ruoyi.project.system.domain.SysUser;
 import com.ruoyi.project.system.domain.SysUserRole;
-import com.ruoyi.project.system.service.ISysDeptService;
-import com.ruoyi.project.system.service.ISysRoleService;
-import com.ruoyi.project.system.service.ISysUserService;
+import com.ruoyi.project.system.service.SysDeptService;
+import com.ruoyi.project.system.service.SysRoleService;
+import com.ruoyi.project.system.service.SysUserService;
 
 /**
  * 角色信息
@@ -41,7 +41,7 @@ import com.ruoyi.project.system.service.ISysUserService;
 public class SysRoleController extends BaseController
 {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private TokenService tokenService;
@@ -50,10 +50,10 @@ public class SysRoleController extends BaseController
     private SysPermissionService permissionService;
 
     @Autowired
-    private ISysUserService userService;
+    private SysUserService sysUserService;
 
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/list")
@@ -132,7 +132,7 @@ public class SysRoleController extends BaseController
             LoginUser loginUser = getLoginUser();
             if (StringUtils.isNotNull(loginUser.getUser()) && !loginUser.getUser().isAdmin())
             {
-                loginUser.setUser(userService.selectUserByUserName(loginUser.getUser().getUserName()));
+                loginUser.setUser(sysUserService.selectUserByUserName(loginUser.getUser().getUserName()));
                 loginUser.setPermissions(permissionService.getMenuPermission(loginUser.getUser()));
                 tokenService.setLoginUser(loginUser);
             }
@@ -197,7 +197,7 @@ public class SysRoleController extends BaseController
     public TableDataInfo allocatedList(SysUser user)
     {
         startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
+        List<SysUser> list = sysUserService.selectAllocatedList(user);
         return getDataTable(list);
     }
 
@@ -209,7 +209,7 @@ public class SysRoleController extends BaseController
     public TableDataInfo unallocatedList(SysUser user)
     {
         startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
+        List<SysUser> list = sysUserService.selectUnallocatedList(user);
         return getDataTable(list);
     }
 

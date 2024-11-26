@@ -20,7 +20,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.domain.SysConfig;
-import com.ruoyi.project.system.service.ISysConfigService;
+import com.ruoyi.project.system.service.SysConfigService;
 
 /**
  * 参数配置 信息操作处理
@@ -32,7 +32,7 @@ import com.ruoyi.project.system.service.ISysConfigService;
 public class SysConfigController extends BaseController
 {
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 获取参数配置列表

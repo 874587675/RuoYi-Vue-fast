@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.domain.SysNotice;
 import com.ruoyi.project.system.mapper.SysNoticeMapper;
-import com.ruoyi.project.system.service.ISysNoticeService;
+import com.ruoyi.project.system.service.SysNoticeService;
 
 /**
  * 公告 服务层实现
@@ -13,7 +13,7 @@ import com.ruoyi.project.system.service.ISysNoticeService;
  * @author ruoyi
  */
 @Service
-public class SysNoticeServiceImpl implements ISysNoticeService
+public class SysNoticeServiceImpl implements SysNoticeService
 {
     @Autowired
     private SysNoticeMapper noticeMapper;

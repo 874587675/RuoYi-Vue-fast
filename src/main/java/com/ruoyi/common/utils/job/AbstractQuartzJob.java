@@ -14,7 +14,7 @@ import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.project.monitor.domain.SysJob;
 import com.ruoyi.project.monitor.domain.SysJobLog;
-import com.ruoyi.project.monitor.service.ISysJobLogService;
+import com.ruoyi.project.monitor.service.SysJobLogService;
 
 /**
  * 抽象quartz调用
@@ -93,7 +93,7 @@ public abstract class AbstractQuartzJob implements Job
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        SpringUtils.getBean(SysJobLogService.class).addJobLog(sysJobLog);
     }
 
     /**

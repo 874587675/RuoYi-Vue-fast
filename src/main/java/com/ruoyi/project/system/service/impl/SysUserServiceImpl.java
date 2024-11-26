@@ -27,9 +27,9 @@ import com.ruoyi.project.system.mapper.SysRoleMapper;
 import com.ruoyi.project.system.mapper.SysUserMapper;
 import com.ruoyi.project.system.mapper.SysUserPostMapper;
 import com.ruoyi.project.system.mapper.SysUserRoleMapper;
-import com.ruoyi.project.system.service.ISysConfigService;
-import com.ruoyi.project.system.service.ISysDeptService;
-import com.ruoyi.project.system.service.ISysUserService;
+import com.ruoyi.project.system.service.SysConfigService;
+import com.ruoyi.project.system.service.SysDeptService;
+import com.ruoyi.project.system.service.SysUserService;
 
 /**
  * 用户 业务层处理
@@ -37,7 +37,7 @@ import com.ruoyi.project.system.service.ISysUserService;
  * @author ruoyi
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService
+public class SysUserServiceImpl implements SysUserService
 {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
@@ -57,10 +57,10 @@ public class SysUserServiceImpl implements ISysUserService
     private SysUserPostMapper userPostMapper;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     @Autowired
-    private ISysDeptService deptService;
+    private SysDeptService deptService;
 
     @Autowired
     protected Validator validator;

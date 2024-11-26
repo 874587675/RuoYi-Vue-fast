@@ -20,7 +20,7 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.domain.SysPost;
-import com.ruoyi.project.system.service.ISysPostService;
+import com.ruoyi.project.system.service.SysPostService;
 
 /**
  * 岗位信息操作处理
@@ -32,7 +32,7 @@ import com.ruoyi.project.system.service.ISysPostService;
 public class SysPostController extends BaseController
 {
     @Autowired
-    private ISysPostService postService;
+    private SysPostService postService;
 
     /**
      * 获取岗位列表

@@ -9,7 +9,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.project.system.domain.SysPost;
 import com.ruoyi.project.system.mapper.SysPostMapper;
 import com.ruoyi.project.system.mapper.SysUserPostMapper;
-import com.ruoyi.project.system.service.ISysPostService;
+import com.ruoyi.project.system.service.SysPostService;
 
 /**
  * 岗位信息 服务层处理
@@ -17,7 +17,7 @@ import com.ruoyi.project.system.service.ISysPostService;
  * @author ruoyi
  */
 @Service
-public class SysPostServiceImpl implements ISysPostService
+public class SysPostServiceImpl implements SysPostService
 {
     @Autowired
     private SysPostMapper postMapper;

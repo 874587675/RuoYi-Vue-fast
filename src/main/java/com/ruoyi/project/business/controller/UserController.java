@@ -20,11 +20,11 @@ import javax.annotation.Resource;
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private UserService sysUserService;
     
     @ApiOperation(value = "新增用户")
     @PostMapping("/add")
     public R<Boolean> addUser(@RequestBody User user) {
-        return R.ok(userService.save(user));
+        return R.ok(sysUserService.save(user));
     }
 }
