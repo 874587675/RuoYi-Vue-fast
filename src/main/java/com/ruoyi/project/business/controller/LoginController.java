@@ -4,6 +4,7 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.framework.security.LoginBody;
 import com.ruoyi.framework.security.service.SysLoginService;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.business.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ import javax.annotation.Resource;
 @RequestMapping("/login")
 public class LoginController {
     @Resource
-    private SysLoginService loginService;
+    private UserService userService;
     
     @ApiOperation("用户名密码登录")
     @PostMapping("/login")
@@ -34,7 +35,7 @@ public class LoginController {
     {
         AjaxResult ajax = AjaxResult.success();
         // 生成令牌
-        String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
+        String token = userService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
         return ajax;

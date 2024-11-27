@@ -40,37 +40,31 @@ public class SecurityConfig {
      */
     @Autowired
     private UserDetailsService userDetailsService;
-
     /**
      * 认证失败处理类
      */
     @Autowired
     private AuthenticationEntryPointImpl unauthorizedHandler;
-
     /**
      * 退出处理类
      */
     @Autowired
     private LogoutSuccessHandlerImpl logoutSuccessHandler;
-
     /**
      * token认证过滤器
      */
     @Autowired
     private JwtAuthenticationTokenFilter authenticationTokenFilter;
-
     /**
      * 跨域过滤器
      */
     @Autowired
     private CorsFilter corsFilter;
-
     /**
      * 允许匿名访问的地址
      */
     @Autowired
     private PermitAllUrlProperties permitAllUrl;
-
     /**
      * 身份验证实现
      */
@@ -81,7 +75,6 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         return new ProviderManager(daoAuthenticationProvider);
     }
-
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问

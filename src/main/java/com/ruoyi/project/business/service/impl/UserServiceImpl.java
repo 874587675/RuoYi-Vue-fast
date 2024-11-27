@@ -10,14 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
 /**
-* @program: RuoYi-Vue-fast
-* @ClassName UserServiceImpl
-* @description: 
-* @author: zgc
-* @date: 2024-11-22 15:15
-* @Version 1.0
-**/
+ * @program: RuoYi-Vue-fast
+ * @ClassName UserServiceImpl
+ * @description:
+ * @author: zgc
+ * @date: 2024-11-22 15:15
+ * @Version 1.0
+ **/
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Override
+    public String login(String username, String password, String code, String uuid) {
+        return null;
+    }
 }
