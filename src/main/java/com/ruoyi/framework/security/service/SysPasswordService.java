@@ -1,6 +1,8 @@
 package com.ruoyi.framework.security.service;
 
 import java.util.concurrent.TimeUnit;
+
+import com.ruoyi.project.business.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -72,6 +74,41 @@ public class SysPasswordService
     }
 
     public boolean matches(SysUser user, String rawPassword)
+    {
+        return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
+    }
+
+    public void validate(User user)
+    {
+        Authentication usernamePasswordAuthenticationToken = AuthenticationContextHolder.getContext();
+        String username = usernamePasswordAuthenticationToken.getName();
+        String password = usernamePasswordAuthenticationToken.getCredentials().toString();
+
+        Integer retryCount = redisCache.getCacheObject(getCacheKey(username));
+
+        if (retryCount == null)
+        {
+            retryCount = 0;
+        }
+
+        if (retryCount >= Integer.valueOf(maxRetryCount).intValue())
+        {
+            throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);
+        }
+
+        if (!matches(user, password))
+        {
+            retryCount = retryCount + 1;
+            redisCache.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
+            throw new UserPasswordNotMatchException();
+        }
+        else
+        {
+            clearLoginRecordCache(username);
+        }
+    }
+
+    public boolean matches(User user, String rawPassword)
     {
         return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
     }

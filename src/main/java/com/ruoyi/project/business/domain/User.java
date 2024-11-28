@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.ruoyi.framework.web.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_user")
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
     /**
      * 用户编号
      */
@@ -75,4 +76,5 @@ public class User implements Serializable {
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
+    
 }

@@ -1,18 +1,15 @@
 package com.ruoyi.project.business.controller;
 
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.framework.security.LoginBody;
-import com.ruoyi.framework.security.service.SysLoginService;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.project.business.domain.User;
 import com.ruoyi.project.business.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @program:
@@ -22,22 +19,20 @@ import javax.annotation.Resource;
  * @date:
  * @Version 1.0
  **/
-@Api(tags = "模块")
 @RestController
 @RequestMapping("/login")
+@Api(tags = "登录注册模块")
 public class LoginController {
-    @Resource
+    @Autowired
     private UserService userService;
     
-    @ApiOperation("用户名密码登录")
     @PostMapping("/login")
-    public AjaxResult login(@RequestBody LoginBody loginBody)
-    {
+    public AjaxResult login(@RequestBody User user) {
         AjaxResult ajax = AjaxResult.success();
-        // 生成令牌
-        String token = userService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getUuid());
+        System.out.println("接入了");
+        String token = userService.login(user.getUsername(), user.getPassword());
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
 }
+

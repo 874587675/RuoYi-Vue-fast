@@ -2,6 +2,8 @@ package com.ruoyi.framework.security;
 
 import java.util.Collection;
 import java.util.Set;
+
+import com.ruoyi.project.business.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.alibaba.fastjson2.annotation.JSONField;
@@ -69,15 +71,23 @@ public class LoginUser implements UserDetails
     /**
      * 用户信息
      */
-    private SysUser user;
+    private SysUser sysUser;
+    
+    private User user;
 
     public LoginUser()
     {
     }
 
+    public LoginUser(Long userId,User user)
+    {
+        this.userId = userId;
+        this.user = user;
+    }
+
     public LoginUser(SysUser user, Set<String> permissions)
     {
-        this.user = user;
+        this.sysUser = user;
         this.permissions = permissions;
     }
 
@@ -85,7 +95,7 @@ public class LoginUser implements UserDetails
     {
         this.userId = userId;
         this.deptId = deptId;
-        this.user = user;
+        this.sysUser = user;
         this.permissions = permissions;
     }
 
@@ -129,7 +139,7 @@ public class LoginUser implements UserDetails
     @Override
     public String getUsername()
     {
-        return user.getUserName();
+        return sysUser.getUserName();
     }
 
     /**
@@ -250,12 +260,12 @@ public class LoginUser implements UserDetails
 
     public SysUser getUser()
     {
-        return user;
+        return sysUser;
     }
 
     public void setUser(SysUser user)
     {
-        this.user = user;
+        this.sysUser = user;
     }
 
     @Override
