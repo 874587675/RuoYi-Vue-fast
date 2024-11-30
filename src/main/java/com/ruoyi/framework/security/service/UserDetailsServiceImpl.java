@@ -4,7 +4,6 @@ import com.ruoyi.project.business.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import com.ruoyi.project.system.service.SysUserService;
  *
  * @author ruoyi
  */
-@Primary
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);

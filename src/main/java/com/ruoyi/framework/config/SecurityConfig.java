@@ -4,12 +4,9 @@ import com.ruoyi.framework.config.properties.PermitAllUrlProperties;
 import com.ruoyi.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.ruoyi.framework.security.handle.AuthenticationEntryPointImpl;
 import com.ruoyi.framework.security.handle.LogoutSuccessHandlerImpl;
-import com.ruoyi.project.business.service.impl.StudentDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,10 +40,6 @@ public class SecurityConfig {
      */
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    @Qualifier("StudentDetailsServiceImpl")
-    private StudentDetailsServiceImpl studentDetailsService;
     /**
      * 认证失败处理类
      */
@@ -72,30 +65,16 @@ public class SecurityConfig {
      */
     @Autowired
     private PermitAllUrlProperties permitAllUrl;
-
     /**
      * 身份验证实现
      */
     @Bean
-    @Primary
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         return new ProviderManager(daoAuthenticationProvider);
     }
-    /**
-     * 自定义身份管理器验证实现
-     */
-    @Bean("StudentAuthenticationManager")
-    public AuthenticationManager studentAuthenticationManager() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(studentDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        return new ProviderManager(daoAuthenticationProvider);
-    }
-
-
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问
