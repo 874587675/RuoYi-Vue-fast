@@ -1,17 +1,17 @@
 package com.ruoyi.project.business.controller;
 
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.verify.sms.aliyun.SendSmsService;
+import com.ruoyi.framework.web.domain.R;
 import com.ruoyi.project.business.service.UserService;
 import com.ruoyi.framework.security.LoginBody;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @program:
@@ -21,22 +21,45 @@ import javax.annotation.Resource;
  * @date:
  * @Version 1.0
  **/
-@Api(tags = "模块")
+@Api(tags = "登录注册模块")
 @RestController
 @RequestMapping("/login")
 public class LoginController {
     @Resource
     private UserService userService;
-    
+    @Resource
+    private SendSmsService sendSmsService;
     @ApiOperation("用户名密码登录")
-    @PostMapping("/login")
-    public AjaxResult login(@RequestBody LoginBody loginBody)
-    {
+    @PostMapping("/loginByUsername")
+    public AjaxResult loginByUsername(@RequestBody LoginBody loginBody) {
         AjaxResult ajax = AjaxResult.success();
         // 生成令牌
-        String token = userService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
+        String token = userService.loginByUsername(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
         return ajax;
+    }
+
+    @ApiOperation("手机号验证码登录")
+    @PostMapping("/loginByPhone")
+    public AjaxResult loginByPhone(@RequestBody LoginBody loginBody) throws ExecutionException, InterruptedException {
+        AjaxResult ajax = AjaxResult.success();
+        // 生成令牌
+        String token = userService.loginByPhone(loginBody.getPhone(),loginBody.getCode());
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
+    
+    @ApiOperation("获取手机验证码")
+    @GetMapping("/getPhoneCode")
+    public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
+        Boolean flag = sendSmsService.SendPhoneCodeToLoginOrRegister(phone);
+        if (flag){
+            return R.ok("获取验证码成功");
+        }else {
+            return R.fail("获取验证码失败");
+        }
+        
+        
     }
 }

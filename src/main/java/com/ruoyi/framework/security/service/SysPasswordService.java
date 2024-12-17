@@ -81,10 +81,15 @@ public class SysPasswordService
 
     public void validate(User user)
     {
+        String username;
+        String password=null;
         Authentication usernamePasswordAuthenticationToken = AuthenticationContextHolder.getContext();
-        String username = usernamePasswordAuthenticationToken.getName();
-        String password = usernamePasswordAuthenticationToken.getCredentials().toString();
-
+        username = usernamePasswordAuthenticationToken.getName();
+        
+        if (usernamePasswordAuthenticationToken.getCredentials() !=null){
+            password = usernamePasswordAuthenticationToken.getCredentials().toString();
+        }
+        
         Integer retryCount = redisCache.getCacheObject(getCacheKey(username));
 
         if (retryCount == null)
@@ -111,9 +116,9 @@ public class SysPasswordService
 
     public boolean matches(User user, String rawPassword)
     {
+        if (rawPassword == null) return true;
         return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
     }
-    
 
     public void clearLoginRecordCache(String loginName)
     {

@@ -97,7 +97,7 @@ public class LogAspect
             if (loginUser != null)
             {
                 operLog.setOperName(loginUser.getUsername());
-                SysUser currentUser = loginUser.getUser();
+                SysUser currentUser = loginUser.getSysUser();
                 if (StringUtils.isNotNull(currentUser) && StringUtils.isNotNull(currentUser.getDept()))
                 {
                     operLog.setDeptName(currentUser.getDept().getDeptName());

@@ -3,6 +3,8 @@ package com.ruoyi.project.business.service;
 import com.ruoyi.project.business.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @program: RuoYi-Vue-fast
  * @ClassName UserService
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Version 1.0
  **/
 public interface UserService extends IService<User> {
-    String login(String username, String password, String code, String uuid);
+    String loginByUsername(String username, String password, String code, String uuid);
+
+    String loginByPhone(String phone, String code);
 }

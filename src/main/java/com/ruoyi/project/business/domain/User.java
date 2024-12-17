@@ -30,7 +30,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_user")
-public class User implements Serializable, UserDetails {
+public class User implements Serializable {
     /**
      * 用户编号
      */
@@ -72,30 +72,7 @@ public class User implements Serializable, UserDetails {
     @TableField(value = "phone")
     @ApiModelProperty(value = "手机号")
     private String phone;
-
-    /**
-     * 用户token
-     */
-    @TableField(value = "token")
-    @ApiModelProperty(value = "用户token")
-    private String token;
-
-    /**
-     * token过期时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(value = "expire_time")
-    @ApiModelProperty(value = "token过期时间")
-    private Date expireTime;
-
-    /**
-     * 用户登录时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(value = "login_time")
-    @ApiModelProperty(value = "用户登录时间")
-    private Date loginTime;
-
+    
     /**
      * 创建时间
      */
@@ -114,38 +91,4 @@ public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
     
-    @Override
-    public String getUsername() {
-        return username;
-    }
-    
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

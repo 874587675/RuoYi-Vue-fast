@@ -126,17 +126,7 @@ public class TokenService
         return createToken(claims);
     }
 
-    public String createToken(User user)
-    {
-        String token = IdUtils.fastUUID();
-        user.setToken(token);
-//        setUserAgent(user);
-        refreshToken(user);
-
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(Constants.LOGIN_USER_KEY, token);
-        return createToken(claims);
-    }
+    
 
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
@@ -168,16 +158,7 @@ public class TokenService
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
 
-    public void refreshToken(User user)
-    {
-        user.setLoginTime(new Date());
-        long expireTimeMillis = user.getLoginTime().getTime() + expireTime * MILLIS_MINUTE;
-        // 使用新的时间戳来创建新的 Date 对象
-        user.setExpireTime(new Date(expireTimeMillis));
-        // 根据uuid将loginUser缓存
-        String userKey = getTokenKey(user.getToken());
-        redisCache.setCacheObject(userKey, user, expireTime, TimeUnit.MINUTES);
-    }
+    
     
     /**
      * 设置用户代理信息

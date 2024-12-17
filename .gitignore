@@ -24,6 +24,7 @@ target/
 *.iws
 *.iml
 *.ipr
+src/main/resources/application-dev.yml
 
 ### JRebel ###
 rebel.xml
