@@ -39,7 +39,7 @@ public class SysLoginService
     @Autowired
     private TokenService tokenService;
 
-    @Resource
+    @Resource(name = "authenticationManager" )
     private AuthenticationManager authenticationManager;
 
     @Autowired

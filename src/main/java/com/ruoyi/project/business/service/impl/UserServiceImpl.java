@@ -33,7 +33,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Resource
     private TokenService tokenService;
     
-    @Resource
+    @Resource(name = "customAuthenticationManager")
     private AuthenticationManager authenticationManager;
     @Override
     public String login(String username, String password, String code, String uuid) {

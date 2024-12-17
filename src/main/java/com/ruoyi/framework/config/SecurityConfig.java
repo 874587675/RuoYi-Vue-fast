@@ -4,16 +4,18 @@ import com.ruoyi.framework.config.properties.PermitAllUrlProperties;
 import com.ruoyi.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.ruoyi.framework.security.handle.AuthenticationEntryPointImpl;
 import com.ruoyi.framework.security.handle.LogoutSuccessHandlerImpl;
+import com.ruoyi.framework.security.service.UserDetailsServiceImpl;
+import com.ruoyi.project.business.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -36,7 +38,11 @@ public class SecurityConfig {
      * 自定义用户认证逻辑
      */
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
+    
+    
+    @Autowired
+    private CustomUserDetailsServiceImpl customUserDetailsService;
     /**
      * 认证失败处理类
      */
@@ -65,17 +71,28 @@ public class SecurityConfig {
     /**
      * 身份验证实现
      */
-    @Bean
+    @Bean("authenticationManager")
+    @Primary
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         DaoAuthenticationProvider customAuthenticationProvider = new DaoAuthenticationProvider();
-        
+
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
 
-        customAuthenticationProvider.setUserDetailsService(userDetailsService);
+        customAuthenticationProvider.setUserDetailsService(customUserDetailsService);
         customAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         return new ProviderManager(daoAuthenticationProvider,customAuthenticationProvider);
+    }
+
+
+    @Bean("customAuthenticationManager")
+    public AuthenticationManager customAuthenticationManager() {
+        DaoAuthenticationProvider customAuthenticationProvider = new DaoAuthenticationProvider();
+        
+        customAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        customAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        return new ProviderManager(customAuthenticationProvider);
     }
     /**
      * anyRequest          |   匹配所有请求路径
