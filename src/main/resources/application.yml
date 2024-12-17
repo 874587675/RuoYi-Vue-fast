@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2024
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-#  profile: D:/ruoyi/uploadPath
+  #  profile: D:/ruoyi/uploadPath
   profile: C:/ruoyi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
@@ -97,7 +97,7 @@ token:
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
   expireTime: 30
-  
+
 ## MyBatis配置
 #mybatis:
 #  # 搜索指定包别名
@@ -109,7 +109,7 @@ token:
 
 mybatis-plus:
   # 配置别名扫描的包
-#  typeAliasesPackage: com.ruoyi.project.**.domain
+  #  typeAliasesPackage: com.ruoyi.project.**.domain
   typeAliasesPackage: com.ruoyi.**.domain
   # 配置mapper.xml的位置
   mapperLocations: classpath*:mybatis/**/*Mapper.xml
@@ -135,9 +135,9 @@ swagger:
   # 是否开启swagger
   enabled: true
   # 请求前缀
-#  pathMapping: /dev-api
-#  pathMapping: /
-  
+  #  pathMapping: /dev-api
+  #  pathMapping: /
+
 
 # 防止XSS攻击
 xss:
@@ -147,7 +147,7 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
-  
+
 # 代码生成
 gen:
   # 作者

@@ -1,14 +1,5 @@
 package com.ruoyi.framework.security.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.ServletUtils;
@@ -18,10 +9,22 @@ import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.framework.security.LoginUser;
+import com.ruoyi.project.business.domain.User;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * token验证处理
@@ -123,6 +126,18 @@ public class TokenService
         return createToken(claims);
     }
 
+    public String createToken(User user)
+    {
+        String token = IdUtils.fastUUID();
+        user.setToken(token);
+//        setUserAgent(user);
+        refreshToken(user);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(Constants.LOGIN_USER_KEY, token);
+        return createToken(claims);
+    }
+
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
      * 
@@ -151,6 +166,17 @@ public class TokenService
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
+    }
+
+    public void refreshToken(User user)
+    {
+        user.setLoginTime(new Date());
+        long expireTimeMillis = user.getLoginTime().getTime() + expireTime * MILLIS_MINUTE;
+        // 使用新的时间戳来创建新的 Date 对象
+        user.setExpireTime(new Date(expireTimeMillis));
+        // 根据uuid将loginUser缓存
+        String userKey = getTokenKey(user.getToken());
+        redisCache.setCacheObject(userKey, user, expireTime, TimeUnit.MINUTES);
     }
     
     /**

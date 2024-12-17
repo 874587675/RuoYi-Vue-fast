@@ -5,7 +5,6 @@ import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -32,7 +31,7 @@ import java.util.List;
 //@Configuration
 public class MyBatisConfig
 {
-    @Autowired
+//    @Autowired
     private Environment env;
 
     static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";

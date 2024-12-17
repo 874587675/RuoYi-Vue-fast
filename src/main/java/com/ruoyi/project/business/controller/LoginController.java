@@ -1,10 +1,9 @@
 package com.ruoyi.project.business.controller;
 
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.framework.security.LoginBody;
-import com.ruoyi.framework.security.service.SysLoginService;
-import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.business.service.UserService;
+import com.ruoyi.framework.security.LoginBody;
+import com.ruoyi.framework.web.domain.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
