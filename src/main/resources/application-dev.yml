@@ -222,14 +222,5 @@ gen:
   tablePrefix: sys_,t_
 
 
-aliyun:
-  accesskey:
-    AccessKeyId: LTAI5tNdAfpSkhDVfqB5N5hY
-    AccessKeySecret: xDKw3vs1TiG5884l8VNFvf1Vkcs5pu
-  smsparams:
-    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com
-    Password: q85238737
-    SignName: 个人博客张广成
-    TemplateCode: SMS_470400116
-    Endpoint: dysmsapi.aliyuncs.com
+
     
