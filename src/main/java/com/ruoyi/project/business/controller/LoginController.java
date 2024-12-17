@@ -27,10 +27,8 @@ import java.util.concurrent.ExecutionException;
 public class LoginController {
     @Resource
     private UserService userService;
-    
     @Resource
     private SendSmsService sendSmsService;
-
     @ApiOperation("用户名密码登录")
     @PostMapping("/loginByUsername")
     public AjaxResult loginByUsername(@RequestBody LoginBody loginBody) {
@@ -54,8 +52,14 @@ public class LoginController {
     
     @ApiOperation("获取手机验证码")
     @GetMapping("/getPhoneCode")
-    public R getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
-        sendSmsService.SendPhoneCodeToLoginOrRegister(phone);
-        return R.ok();
+    public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
+        Boolean flag = sendSmsService.SendPhoneCodeToLoginOrRegister(phone);
+        if (flag){
+            return R.ok("获取验证码成功");
+        }else {
+            return R.fail("获取验证码失败");
+        }
+        
+        
     }
 }
