@@ -69,7 +69,7 @@ public class DataScopeAspect
         LoginUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNotNull(loginUser))
         {
-            SysUser currentUser = loginUser.getUser();
+            SysUser currentUser = loginUser.getSysUser();
             // 如果是超级管理员，则不过滤数据
             if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin())
             {

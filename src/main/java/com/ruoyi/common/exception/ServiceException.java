@@ -36,6 +36,7 @@ public final class ServiceException extends RuntimeException
     public ServiceException(String message)
     {
         this.message = message;
+        this.code = 500;
     }
 
     public ServiceException(String message, Integer code)

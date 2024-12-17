@@ -156,7 +156,7 @@ public class SecurityUtils
      */
     public static boolean hasRole(String role)
     {
-        List<SysRole> roleList = getLoginUser().getUser().getRoles();
+        List<SysRole> roleList = getLoginUser().getSysUser().getRoles();
         Collection<String> roles = roleList.stream().map(SysRole::getRoleKey).collect(Collectors.toSet());
         return hasRole(roles, role);
     }

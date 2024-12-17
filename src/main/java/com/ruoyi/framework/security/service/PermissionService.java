@@ -92,11 +92,11 @@ public class PermissionService
             return false;
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles()))
+        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getSysUser().getRoles()))
         {
             return false;
         }
-        for (SysRole sysRole : loginUser.getUser().getRoles())
+        for (SysRole sysRole : loginUser.getSysUser().getRoles())
         {
             String roleKey = sysRole.getRoleKey();
             if (Constants.SUPER_ADMIN.equals(roleKey) || roleKey.equals(StringUtils.trim(role)))
@@ -131,7 +131,7 @@ public class PermissionService
             return false;
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles()))
+        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getSysUser().getRoles()))
         {
             return false;
         }
