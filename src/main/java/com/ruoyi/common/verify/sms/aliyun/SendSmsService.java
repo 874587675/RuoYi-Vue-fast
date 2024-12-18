@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.utils.random.RandomUtils;
 import com.ruoyi.framework.redis.RedisCache;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import darabonba.core.client.ClientOverrideConfiguration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +32,6 @@ public class SendSmsService {
     @Resource
     private RedisCache redisCache;
     
-    // AccessKey参数配置
-    private AccessKey accesskey;
     // SmsParams参数配置
     private SmsParams smsparams;
 
@@ -54,8 +51,8 @@ public class SendSmsService {
                 .ignoreSSL(false)
                 .build();*/
         StaticCredentialProvider provider = StaticCredentialProvider.create(Credential.builder()// 凭证提供者
-                .accessKeyId(accesskey.getAccessKeyId())
-                .accessKeySecret(accesskey.getAccessKeySecret())
+                .accessKeyId(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_ID"))
+                .accessKeySecret(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET"))
                 //.securityToken(System.getenv("ALIBABA_CLOUD_SECURITY_TOKEN")) // 使用 STS token
                 .build());
         
@@ -82,16 +79,16 @@ public class SendSmsService {
                 .build();
         log.info("验证码code为:{}" , code);
         CompletableFuture<SendSmsResponse> response = client.sendSms(sendSmsRequest);// 使用CompletableFuture异步返回值
-//        SendSmsResponse resp = response.get();   // 同步执行
-//        System.out.println(JSON.toJSON(resp));  
+        SendSmsResponse resp = response.get();   // 同步执行
+        System.out.println(JSON.toJSON(resp));  
         //异步执行输出
-        response.thenAccept(resp -> {   
-            System.out.println(new Gson().toJson(resp));
-        }).exceptionally(throwable -> { // Handling exceptions
-            System.out.println(throwable.getMessage());
-            return null;
-        });
-        client.close(); // Finally, close the client
+//        response.thenAccept(resp -> {   
+//            System.out.println(new Gson().toJson(resp));
+//        }).exceptionally(throwable -> { // 处理异常
+//            System.out.println(throwable.getMessage());
+//            return null;
+//        });
+        client.close(); // 关闭客户端
         return true;
     }
     
@@ -100,13 +97,7 @@ public class SendSmsService {
         String redisCode = redisCache.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY);
         return redisCode!= null && redisCode.equalsIgnoreCase(phone + code);
     }
-
-    @Data
-    public static class AccessKey {
-        private String AccessKeyId;
-        private String AccessKeySecret;
-    }
-
+    
     @Data
     public static class SmsParams {
         private String UserPrincipalName;
