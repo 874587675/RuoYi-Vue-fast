@@ -228,4 +228,5 @@ aliyun:
     SignName: 个人博客张广成
     TemplateCode: SMS_470400116
     Endpoint: dysmsapi.aliyuncs.com
+    RegionId: cn-qingdao
     

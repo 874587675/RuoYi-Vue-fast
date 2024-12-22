@@ -56,6 +56,7 @@ public class SendSmsService {
                 .build());
         
         AsyncClient client = AsyncClient.builder()// 客户端配置，创建异步客户端
+                .region(smsparams.RegionId)
                 //.httpClient(httpClient) // Use the configured HttpClient, otherwise use the default HttpClient (Apache HttpClient)
                 .credentialsProvider(provider)
                 //.serviceConfiguration(Configuration.create()) // Service-level configuration
@@ -104,6 +105,7 @@ public class SendSmsService {
         private String SignName;
         private String Endpoint;
         private String TemplateCode;
+        private String RegionId;
     }
 
 }
