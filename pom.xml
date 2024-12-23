@@ -279,9 +279,66 @@
             <artifactId>alibabacloud-dysmsapi20170525</artifactId>
             <version>3.0.1</version>
         </dependency>
-        
-        
 
+        <!-- 阿里云OSS对象存储服务-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- no more than 2.3.3-->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+        <!--上面的OSS  如果使用的是Java 9及以上的版本，则需要添加以下JAXB相关依赖-->
+        
+        <!-- x-file-storage-spring这个库支持多种存储后端，包括阿里云OSS、Amazon S3、腾讯云COS等云存储服务，同时也支持本地文件存储-->
+        <dependency>
+            <groupId>org.dromara.x-file-storage</groupId>
+            <artifactId>x-file-storage-spring</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        
+        <!-- 阿里云OCR依赖-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibabacloud-ocr_api20210707</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        
+        <!-- Apache tika依赖-->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>2.8.0</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-parsers</artifactId>
+            <version>2.8.0</version>
+            <type>pom</type>
+        </dependency>
+        
+        <!-- 支付宝SDK-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.40.21.ALL</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

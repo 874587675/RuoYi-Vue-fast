@@ -1,13 +1,12 @@
 package com.ruoyi.project.business.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.utils.MessageUtils;
-import com.ruoyi.common.verify.sms.aliyun.SendSmsService;
+import com.ruoyi.common.verify.aliyun.sms.SmsUtil;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.framework.security.LoginUser;
@@ -23,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @program: RuoYi-Vue-fast
@@ -39,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private TokenService tokenService;
 
     @Resource
-    private SendSmsService sendSmsService;
+    private SmsUtil smsUtil;
 
     @Resource(name = "customAuthenticationManager")
     private AuthenticationManager authenticationManager;
@@ -72,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String loginByPhone(String phone, String code) {
         //检查短信验证码
-        if (!sendSmsService.verifyPhoneCode(phone, code)) {
+        if (!smsUtil.verifyPhoneCode(phone, code)) {
             throw new ServiceException("输入的验证码有误，请稍后再试");
         }
         User user = getOne(new LambdaQueryWrapper<User>().eq(User::getPhone, phone));
