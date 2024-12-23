@@ -1,0 +1,39 @@
+package com.ruoyi.common.verify.aliyun.pay.pc.notifyurl.controller;
+
+import com.ruoyi.common.verify.aliyun.pay.pc.notifyurl.service.AlipayNotifyService;
+import com.ruoyi.framework.web.domain.R;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@RequestMapping("/api/pay")
+@ApiOperation("支付宝支付通知")
+@RestController
+public class AlipayNotifyController {
+    @Resource
+    private AlipayNotifyService alipayNotifyService;
+    
+    @PostMapping("/notify")
+    private R<String> notify(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            boolean isVerified = alipayNotifyService.verifyNotify(request);
+            if (isVerified) {
+                // 支付成功，返回200状态码
+                return R.ok("支付成功");
+            } else {
+                // 验证失败，返回500状态码
+                return R.fail("支付失败");
+            }
+        } catch (Exception e) {
+            return R.fail("支付失败");
+        }
+    }
+}

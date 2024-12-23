@@ -1,5 +1,5 @@
 // This file is auto-generated, don't edit it. Thanks.
-package com.ruoyi.common.verify.sms.aliyun;
+package com.ruoyi.common.verify.aliyun.sms;
 
 import com.alibaba.fastjson2.JSON;
 import com.aliyun.auth.credentials.Credential;
@@ -9,30 +9,29 @@ import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.utils.random.RandomUtils;
+import com.ruoyi.common.verify.config.AliyunConfig;
 import com.ruoyi.framework.redis.RedisCache;
 import darabonba.core.client.ClientOverrideConfiguration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-@Configuration
-@ConfigurationProperties(prefix = "aliyun")
-@EnableConfigurationProperties
+@Component
+@EnableConfigurationProperties(AliyunConfig.class)
 @Data
 @Slf4j
-public class SendSmsService {
+public class SmsUtil {
     @Resource
     private RedisCache redisCache;
-    
-    // SmsParams参数配置
-    private SmsParams smsparams;
+
+    @Resource
+    private AliyunConfig aliyunConfig;
 
     public Boolean SendPhoneCodeToLoginOrRegister(String phone) throws ExecutionException, InterruptedException {
         // HttpClient Configuration
@@ -50,18 +49,18 @@ public class SendSmsService {
                 .ignoreSSL(false)
                 .build();*/
         StaticCredentialProvider provider = StaticCredentialProvider.create(Credential.builder()// 凭证提供者
-                .accessKeyId(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_ID"))
-                .accessKeySecret(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET"))
+                .accessKeyId(aliyunConfig.getAccessparams().getKeyId())
+                .accessKeySecret(aliyunConfig.getAccessparams().getKeySecret())
                 //.securityToken(System.getenv("ALIBABA_CLOUD_SECURITY_TOKEN")) // 使用 STS token
                 .build());
         
         AsyncClient client = AsyncClient.builder()// 客户端配置，创建异步客户端
-                .region(smsparams.RegionId)
+                .region(aliyunConfig.getSmsparams().getRegionId())
                 //.httpClient(httpClient) // Use the configured HttpClient, otherwise use the default HttpClient (Apache HttpClient)
                 .credentialsProvider(provider)
                 //.serviceConfiguration(Configuration.create()) // Service-level configuration
                 .overrideConfiguration(
-                        ClientOverrideConfiguration.create().setEndpointOverride(smsparams.getEndpoint())// Endpoint 请参考 https://api.aliyun.com/product/Dysmsapi
+                        ClientOverrideConfiguration.create().setEndpointOverride(aliyunConfig.getSmsparams().getEndpoint())// Endpoint 请参考 https://api.aliyun.com/product/Dysmsapi
                         //.setConnectTimeout(Duration.ofSeconds(30))
                 ).build();
 
@@ -72,8 +71,8 @@ public class SendSmsService {
         
         SendSmsRequest sendSmsRequest = SendSmsRequest.builder()  //参数设置
                 .phoneNumbers(phone)
-                .signName(smsparams.getSignName())
-                .templateCode(smsparams.getTemplateCode())
+                .signName(aliyunConfig.getSmsparams().getSignName())
+                .templateCode(aliyunConfig.getSmsparams().getTemplateCode())
                 .templateParam("{code:" + code + "}")
                 // .requestConfiguration(RequestConfiguration.create().setHttpHeaders(new HttpHeaders()))  设置HTTP请求头
                 .build();
@@ -97,16 +96,5 @@ public class SendSmsService {
         String redisCode = redisCache.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY);
         return redisCode!= null && redisCode.equalsIgnoreCase(phone + code);
     }
-    
-    @Data
-    public static class SmsParams {
-        private String UserPrincipalName;
-        private String Password;
-        private String SignName;
-        private String Endpoint;
-        private String TemplateCode;
-        private String RegionId;
-    }
-
 }
 
