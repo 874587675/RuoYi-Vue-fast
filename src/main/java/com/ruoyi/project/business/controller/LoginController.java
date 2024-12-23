@@ -13,14 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 
-/**
- * @program:
- * @ClassName:
- * @description:
- * @author: zgc
- * @date:
- * @Version 1.0
- **/
 @Api(tags = "登录注册模块")
 @RestController
 @RequestMapping("/login")
@@ -29,13 +21,13 @@ public class LoginController {
     private UserService userService;
     @Resource
     private SendSmsService sendSmsService;
+
     @ApiOperation("用户名密码登录")
     @PostMapping("/loginByUsername")
     public AjaxResult loginByUsername(@RequestBody LoginBody loginBody) {
         AjaxResult ajax = AjaxResult.success();
-        // 生成令牌
         String token = userService.loginByUsername(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getUuid());
+                loginBody.getUuid());   // 生成令牌
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
@@ -44,22 +36,16 @@ public class LoginController {
     @PostMapping("/loginByPhone")
     public AjaxResult loginByPhone(@RequestBody LoginBody loginBody) throws ExecutionException, InterruptedException {
         AjaxResult ajax = AjaxResult.success();
-        // 生成令牌
-        String token = userService.loginByPhone(loginBody.getPhone(),loginBody.getCode());
+        String token = userService.loginByPhone(loginBody.getPhone(), loginBody.getCode());// 生成令牌
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
-    
+
     @ApiOperation("获取手机验证码")
     @GetMapping("/getPhoneCode")
     public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
         Boolean flag = sendSmsService.SendPhoneCodeToLoginOrRegister(phone);
-        if (flag){
-            return R.ok("获取验证码成功");
-        }else {
-            return R.fail("获取验证码失败");
-        }
-        
-        
+        if (flag) return R.ok("获取验证码成功");
+        else return R.fail("获取验证码失败");
     }
 }
