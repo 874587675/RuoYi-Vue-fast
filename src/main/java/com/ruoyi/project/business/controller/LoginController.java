@@ -51,4 +51,11 @@ public class LoginController {
         if (flag) return R.ok("获取验证码成功");
         else return R.fail("获取验证码失败");
     }
+    
+    @ApiOperation("上传图片")
+    @PostMapping("/uploadImage")
+    public R<String> uploadImage(@RequestParam MultipartFile file) {
+        String url = ossUtil.uploadFileByType(file,"image").getUrl();
+        return R.ok(url);
+    }
 }
