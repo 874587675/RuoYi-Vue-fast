@@ -47,7 +47,7 @@ public class LoginController {
     @ApiOperation("获取手机验证码")
     @GetMapping("/getPhoneCode")
     public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
-        Boolean flag = sendSmsService.SendPhoneCodeToLoginOrRegister(phone);
+        Boolean flag = smsUtil.SendPhoneCodeToLoginOrRegister(phone);
         if (flag) return R.ok("获取验证码成功");
         else return R.fail("获取验证码失败");
     }
