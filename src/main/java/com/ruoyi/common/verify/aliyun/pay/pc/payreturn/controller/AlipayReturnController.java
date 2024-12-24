@@ -1,6 +1,6 @@
-package com.ruoyi.common.verify.aliyun.pay.pc.returnurl.controller;
+package com.ruoyi.common.verify.aliyun.pay.pc.payreturn.controller;
 
-import com.ruoyi.common.verify.aliyun.pay.pc.returnurl.service.AlipayReturnService;
+import com.ruoyi.common.verify.aliyun.pay.pc.payreturn.service.AlipayReturnService;
 import com.ruoyi.framework.web.domain.R;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;

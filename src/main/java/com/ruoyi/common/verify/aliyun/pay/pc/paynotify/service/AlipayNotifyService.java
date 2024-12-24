@@ -1,4 +1,4 @@
-package com.ruoyi.common.verify.aliyun.pay.pc.notifyurl.service;
+package com.ruoyi.common.verify.aliyun.pay.pc.paynotify.service;
 
 import com.alipay.api.internal.util.AlipaySignature;
 import com.ruoyi.common.verify.config.AlipayConfig;

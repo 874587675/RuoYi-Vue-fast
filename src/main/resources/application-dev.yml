@@ -238,17 +238,17 @@ aliyun:
 
 zfb:
   payparams:
-    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}
-    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY}
-    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY}
-    GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
-    NotifyUrl: https://www.zgcbuild.top/api/pay/notify
-    ReturnUrl: https://www.zgcbuild.top/api/pay/return
-    SignType: RSA2
-    Charset: utf-8
-    Format: json
-    Version: 1.0
-    ProductCode: FAST_INSTANT_TRADE_PAY
+    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}  
+    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY} 
+    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY} 
+    GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do #沙箱环境
+    NotifyUrl: https://www.zgcbuild.top/api/pay/notify  #异步通知地址
+    ReturnUrl: https://www.zgcbuild.top/api/pay/return  #同步通知地址
+    SignType: RSA2  #签名类型
+    Charset: utf-8  #字符编码
+    Format: json  #返回格式
+    Version: 1.0  #版本号
+    ProductCode: FAST_INSTANT_TRADE_PAY #产品码
     
 #对象存储相关配置
 dromara:

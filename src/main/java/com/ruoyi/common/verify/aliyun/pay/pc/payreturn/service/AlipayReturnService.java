@@ -1,4 +1,4 @@
-package com.ruoyi.common.verify.aliyun.pay.pc.returnurl.service;
+package com.ruoyi.common.verify.aliyun.pay.pc.payreturn.service;
 
 import org.springframework.stereotype.Service;
 

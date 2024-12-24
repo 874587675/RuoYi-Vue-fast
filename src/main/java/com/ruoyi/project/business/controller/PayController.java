@@ -33,12 +33,13 @@ public class PayController {
         // 设置支付请求模型
         AlipayTradePagePayModel model = new AlipayTradePagePayModel();
 
-        model.setOutTradeNo(order.getOrderNo());
-        model.setTotalAmount(String.valueOf(order.getAmount()));
-        model.setSubject(order.getSubject());
-        model.setProductCode(aliPayConfig.getPayparams().getProductCode());
+        model.setOutTradeNo(order.getOrderNo());    // 商户订单号 必选
+        model.setTotalAmount(String.valueOf(order.getAmount()));    // 订单金额 必选
+        model.setSubject(order.getSubject());   // 订单标题 必选
+        model.setProductCode(aliPayConfig.getPayparams().getProductCode());   // 销售产品码 必选   
         
-        model.setQrPayMode("2");
+        
+        model.setQrPayMode("2");    // 跳转模式 可选
         // 请求支付
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
         request.setReturnUrl(aliPayConfig.getPayparams().getReturnUrl());
