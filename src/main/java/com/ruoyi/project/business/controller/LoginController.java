@@ -1,30 +1,27 @@
 package com.ruoyi.project.business.controller;
 
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.verify.aliyun.oss.OssUtil;
 import com.ruoyi.common.verify.aliyun.sms.SmsUtil;
-import com.ruoyi.framework.web.domain.R;
-import com.ruoyi.project.business.service.UserService;
 import com.ruoyi.framework.security.LoginBody;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.framework.web.domain.R;
+import com.ruoyi.project.business.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 
 @Api(tags = "登录注册模块")
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/index")
 public class LoginController {
     @Resource
     private UserService userService;
     @Resource
     private SmsUtil smsUtil;
-    @Resource
-    private OssUtil ossUtil;
+    
     @ApiOperation("用户名密码登录")
     @PostMapping("/loginByUsername")
     public AjaxResult loginByUsername(@RequestBody LoginBody loginBody) {
@@ -52,10 +49,4 @@ public class LoginController {
         else return R.fail("获取验证码失败");
     }
     
-    @ApiOperation("上传图片")
-    @PostMapping("/uploadImage")
-    public R<String> uploadImage(@RequestParam MultipartFile file) {
-        String url = ossUtil.uploadFileByType(file,"image").getUrl();
-        return R.ok(url);
-    }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/order")
-@Api(tags = "订单管理")
+@Api(tags = "订单管理模块")
 public class OrderController {
 
     @Autowired

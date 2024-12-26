@@ -2,7 +2,6 @@ package com.ruoyi.project.business.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
-
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.request.AlipayTradePagePayRequest;
@@ -20,7 +19,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/pay")
-@Api(tags = "支付管理")
+@Api(tags = "支付管理模块")
 public class PayController {
     @Resource
     private AlipayConfig aliPayConfig;
