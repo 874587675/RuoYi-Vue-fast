@@ -49,4 +49,10 @@ public class LoginController {
         else return R.fail("获取验证码失败");
     }
     
+    @ApiOperation("用户注册")
+    @PostMapping("/register")
+    public R<Boolean> register(@RequestBody LoginBody loginBody) {
+        return R.ok(userService.register(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
+                loginBody.getPhone()));
+    }
 }

@@ -1,30 +1,14 @@
 package com.ruoyi.project.business.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-
-/**
- * @program: RuoYi-Vue-fast
- * @ClassName User
- * @description:
- * @author: zgc
- * @date: 2024-12-16 21:10
- * @Version 1.0
- **/
 @ApiModel(description = "t_user")
 @Data
 @AllArgsConstructor
@@ -60,6 +44,34 @@ public class User implements Serializable {
     private String password;
 
     /**
+     * 用户昵称
+     */
+    @TableField(value = "nickname")
+    @ApiModelProperty(value = "用户昵称")
+    private String nickname;
+
+    /**
+     * 用户状态(1-正常 2-冻结)
+     */
+    @TableField(value = "`status`")
+    @ApiModelProperty(value = "用户状态(1-正常 2-冻结)")
+    private Byte status;
+
+    /**
+     * 性别
+     */
+    @TableField(value = "sex")
+    @ApiModelProperty(value = "性别")
+    private String sex;
+
+    /**
+     * 邮箱地址
+     */
+    @TableField(value = "email")
+    @ApiModelProperty(value = "邮箱地址")
+    private String email;
+
+    /**
      * 头像
      */
     @TableField(value = "avatar")
@@ -72,11 +84,25 @@ public class User implements Serializable {
     @TableField(value = "phone")
     @ApiModelProperty(value = "手机号")
     private String phone;
-    
+
+    /**
+     * 历史手机号
+     */
+    @TableField(value = "history_phone")
+    @ApiModelProperty(value = "历史手机号")
+    private String historyPhone;
+
+    /**
+     * 逻辑删除状态（0-未删除 1-已删除）
+     */
+    @TableLogic
+    @TableField(value = "is_deleted")
+    @ApiModelProperty(value = "逻辑删除状态（0-未删除 1-已删除）")
+    private Byte isDeleted;
+
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "create_time")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
@@ -84,11 +110,9 @@ public class User implements Serializable {
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "update_time")
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
-    
 }

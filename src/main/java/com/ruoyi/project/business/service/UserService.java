@@ -1,5 +1,6 @@
 package com.ruoyi.project.business.service;
 
+import com.ruoyi.framework.security.LoginBody;
 import com.ruoyi.project.business.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +18,6 @@ public interface UserService extends IService<User> {
     String loginByUsername(String username, String password, String code, String uuid);
 
     String loginByPhone(String phone, String code);
+
+    Boolean register(String username, String password, String code, String phone);
 }

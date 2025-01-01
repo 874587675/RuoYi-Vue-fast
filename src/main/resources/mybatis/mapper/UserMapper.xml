@@ -8,17 +8,20 @@
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="token" jdbcType="VARCHAR" property="token" />
-    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
-    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="history_phone" jdbcType="VARCHAR" property="historyPhone" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, open_id, username, `password`, avatar, phone, token, expire_time, login_time, 
-    create_time, update_time
+    id, open_id, username, `password`, nickname, `status`, sex, email, avatar, phone, 
+    history_phone, is_deleted, create_time, update_time
   </sql>
 </mapper>
