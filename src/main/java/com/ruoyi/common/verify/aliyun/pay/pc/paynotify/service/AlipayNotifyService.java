@@ -1,7 +1,7 @@
 package com.ruoyi.common.verify.aliyun.pay.pc.paynotify.service;
 
 import com.alipay.api.internal.util.AlipaySignature;
-import com.ruoyi.common.verify.config.AlipayConfig;
+import com.ruoyi.common.verify.config.AlipayConfigs;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class AlipayNotifyService {
     @Resource
-    private AlipayConfig alipayConfig;
+    private AlipayConfigs alipayConfigs;
     // 验证支付通知合法性
     public boolean verifyNotify(HttpServletRequest request) throws Exception {
         // 获取请求参数
@@ -29,9 +29,9 @@ public class AlipayNotifyService {
         // 支付宝公钥
         boolean signVerified = AlipaySignature.rsaCheckV1(
                 params,
-                alipayConfig.getPayparams().getAlipayPublicKey(), 
-                alipayConfig.getPayparams().getCharset(), 
-                alipayConfig.getPayparams().getSignType());
+                alipayConfigs.getPayparams().getAlipayPublicKey(),
+                alipayConfigs.getPayparams().getCharset(),
+                alipayConfigs.getPayparams().getSignType());
         if (signVerified) {
             String tradeStatus = request.getParameter("trade_status");
             if ("TRADE_SUCCESS".equals(tradeStatus)) {

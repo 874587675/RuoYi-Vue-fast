@@ -1,10 +1,13 @@
 package com.ruoyi.project.business.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.verify.aliyun.sms.SmsUtil;
 import com.ruoyi.framework.security.LoginBody;
+import com.ruoyi.framework.security.RegisterBody;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.domain.R;
+import com.ruoyi.project.business.domain.User;
 import com.ruoyi.project.business.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +24,7 @@ public class LoginController {
     private UserService userService;
     @Resource
     private SmsUtil smsUtil;
-    
+
     @ApiOperation("用户名密码登录")
     @PostMapping("/loginByUsername")
     public AjaxResult loginByUsername(@RequestBody LoginBody loginBody) {
@@ -48,11 +51,37 @@ public class LoginController {
         if (flag) return R.ok("获取验证码成功");
         else return R.fail("获取验证码失败");
     }
-    
-    @ApiOperation("用户注册")
-    @PostMapping("/register")
-    public R<Boolean> register(@RequestBody LoginBody loginBody) {
-        return R.ok(userService.register(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getPhone()));
+
+    @ApiOperation("使用用户名密码注册")
+    @PostMapping("/registerByUsername")
+    public R<String> registerByUsername(@RequestBody RegisterBody registerBody) {
+        return R.ok(userService.registerByUsername(registerBody.getUsername(), registerBody.getPassword(), registerBody.getCode(),
+                registerBody.getUuid()));
     }
+
+    @ApiOperation("使用手机号注册")
+    @PostMapping("/registerByPhone")
+    public R<String> registerByPhone(@RequestBody RegisterBody registerBody) {
+        return R.ok(userService.registerByPhone(registerBody.getPhone(), registerBody.getPassword(), registerBody.getCode()));
+    }
+
+    @ApiOperation("使用邮箱注册")
+    @PostMapping("/registerByEmail")
+    public R<String> registerByEmail(@RequestBody RegisterBody registerBody) {
+        return R.ok(userService.registerByEmail(registerBody.getEmail(), registerBody.getPassword(), registerBody.getCode()));
+    }
+    
+    @ApiOperation("查询用户名是否已被使用")
+    @GetMapping("/checkUsername")
+    public R<Boolean> checkUsername(@RequestParam String username) {
+        return R.ok(userService.checkUsername(username));
+    }
+
+    @ApiOperation("查询手机号是否已被使用")
+    @GetMapping("/checkPhone")
+    public R<Boolean> checkPhone(@RequestParam String phone) {return R.ok(userService.checkPhone(phone));}
+
+    @ApiOperation("查询邮箱是否已被使用")
+    @GetMapping("/checkEmail")
+    public R<Boolean> checkEmail(@RequestParam String email) {return R.ok(userService.checkEmail(email));}
 }

@@ -1,32 +1,26 @@
 package com.ruoyi.framework.redis;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.GeoOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.domain.geo.GeoLocation;
-import org.springframework.data.redis.domain.geo.Metrics;
+import org.springframework.data.redis.core.RedisTemplate;
+
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author zgc
  */
+@SuppressWarnings(value = { "unchecked", "rawtypes" })
 @Component
 public class GeoComponent {
+
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * 添加成员
@@ -52,7 +46,7 @@ public class GeoComponent {
         // 批量添加成员
         return geoOps.add(key, memberCoordinateMap);
     }
-    
+
     /**
      * 获取两个成员的距离
      * @param key
@@ -125,5 +119,5 @@ public class GeoComponent {
     public GeoResults<RedisGeoCommands.GeoLocation<String>> geoRadiusByMember(String key, String member, double v, Metrics metric, RedisGeoCommands.GeoRadiusCommandArgs args){
         return redisTemplate.opsForGeo().radius(key, member, new Distance(v, metric), args);
     }
-    
+
 }

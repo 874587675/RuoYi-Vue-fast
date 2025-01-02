@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RequestMapping("/api/pay")
+@RequestMapping("/api/pay/alipay")
 @ApiOperation("支付宝支付通知")
 @RestController
 public class AlipayNotifyController {

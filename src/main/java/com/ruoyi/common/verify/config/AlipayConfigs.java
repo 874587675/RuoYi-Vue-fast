@@ -1,27 +1,21 @@
 package com.ruoyi.common.verify.config;
 
+import com.alipay.api.AlipayConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @program:
- * @ClassName:
- * @description:
- * @author: zgc
- * @date:
- * @Version 1.0
- **/
+
 @Configuration
-@ConfigurationProperties(prefix = "zfb")
+@ConfigurationProperties(prefix = "alipay")
 @Data
-public class AlipayConfig {
+public class AlipayConfigs {
     private PayParams payparams;
     
     @Bean
-    public com.alipay.api.AlipayConfig getAlipayConfig() {
-        com.alipay.api.AlipayConfig alipayConfig = new com.alipay.api.AlipayConfig(); //支付宝配置
+    public AlipayConfig getAlipayConfig() {
+        AlipayConfig alipayConfig = new AlipayConfig(); //支付宝配置
         alipayConfig.setAppId(payparams.getAppId());    //应用ID
         alipayConfig.setPrivateKey(payparams.getMerchantPrivateKey());  //商户私钥
         alipayConfig.setAlipayPublicKey(payparams.getAlipayPublicKey());
