@@ -340,13 +340,13 @@
             <version>4.40.21.ALL</version>
         </dependency>
 
-        <!-- 微信支付SDK-->
+        <!-- 微信支付SDK(合作伙伴平台)-->
         <dependency>
             <groupId>com.github.wechatpay-apiv3</groupId>
             <artifactId>wechatpay-apache-httpclient</artifactId>
             <version>0.4.9</version>
         </dependency>
-
+        <!-- 微信支付SDK-->
         <dependency>
             <groupId>com.github.wechatpay-apiv3</groupId>
             <artifactId>wechatpay-java</artifactId>

@@ -254,11 +254,18 @@ alipay:
 #微信支付相关配置
 wxpay:
   payparams:
-    MerchantId: 1606444287
-    AppId: wxff0cf54e2af1fa40
-    PrivateKeyPath: cert_wxpay/apiclient_key.pem
-    MerchantSerialNumber: 3581E71E4D77A1EE57D50E8FEB20F3B977C3C386
-    ApiV3Key: lqozpTpcLhz4NiMfL2o99zFdsI5IkEDv
+#    MerchantId: 1606444287
+#    AppId: wxff0cf54e2af1fa40
+#    PrivateKeyPath: cert_wxpay/apiclient_key.pem
+#    MerchantSerialNumber: 3581E71E4D77A1EE57D50E8FEB20F3B977C3C386
+#    ApiV3Key: lqozpTpcLhz4NiMfL2o99zFdsI5IkEDv
+#    NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
+#    ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
+    MerchantId: 1638660091
+    AppId: wxc7fa0677f0875535
+    PrivateKeyPath: wx/apiclient_key.pem
+    MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6
+    ApiV3Key: e3a7f079c2237df57f9923e5258d5172
     NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
     ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
 

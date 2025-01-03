@@ -1,27 +1,22 @@
 package com.ruoyi.common.verify.config;
 
 import com.wechat.pay.java.core.Config;
-import com.wechat.pay.java.core.RSAPublicKeyConfig;
+import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @ClassName:WxPayConfig
- * @description:
- * @author: zgc
- **/
+
 @Configuration
 @ConfigurationProperties(prefix = "wxpay")
 @Data
 public class WxPayConfig {
     private PayParams payparams;
-    
+    // SpringBoot的Bean默认是单例的
     @Bean
     public Config getWxPayConfig() {
-
-        return new RSAPublicKeyConfig.Builder()
+        return new RSAAutoCertificateConfig.Builder()
                 //商户号
                 .merchantId(payparams.getMerchantId())
                 //商户API私钥路径
