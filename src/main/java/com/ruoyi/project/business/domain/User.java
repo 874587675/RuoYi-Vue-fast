@@ -57,7 +57,7 @@ public class User implements Serializable {
      */
     @TableField(value = "`status`")
     @ApiModelProperty(value = "用户状态(1-正常 2-冻结)")
-    private Byte status;
+    private Integer status;
 
     /**
      * 性别
@@ -100,7 +100,7 @@ public class User implements Serializable {
     @TableLogic
     @TableField(value = "is_deleted")
     @ApiModelProperty(value = "逻辑删除状态（0-未删除 1-已删除）")
-    private Byte isDeleted;
+    private Integer isDeleted;
 
     /**
      * 创建时间

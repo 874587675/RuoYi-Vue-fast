@@ -3,6 +3,8 @@ package com.ruoyi.common.verify.wechat.util;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.common.verify.config.WxPayConfig;
 import com.ruoyi.project.business.domain.Order;
+import com.wechat.pay.contrib.apache.httpclient.auth.AutoUpdateCertificatesVerifier;
+import com.wechat.pay.contrib.apache.httpclient.util.AesUtil;
 import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.service.payments.jsapi.JsapiService;
 import com.wechat.pay.java.service.payments.jsapi.model.Amount;
@@ -16,16 +18,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.Signature;
+import java.security.*;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @ClassName:WxPayJsapiService
@@ -35,6 +41,8 @@ import java.util.*;
 @Slf4j
 @Component
 public class WxPayUtil {
+    @Resource
+    private WxPayConfig wxPayConfig;
     /**
      * 移动端支付请求签名
      * @param payParams
@@ -54,7 +62,7 @@ public class WxPayUtil {
             String value = entry.getValue();
 
             // 排除空值与签名字段
-            if (value != null && !value.trim().isEmpty() && !"sign".equals(key)) {
+            if (value != null && !value.trim().isEmpty() && !"signType".equals(key)) {
                 stringBuilder.append(key).append("=").append(value).append("&");
             }
         }
@@ -71,6 +79,97 @@ public class WxPayUtil {
         byte[] signedBytes = signature.sign();
         return new String(java.util.Base64.getEncoder().encode(signedBytes), StandardCharsets.UTF_8);
     }
+    
+    /**
+     * 移动端验签解密
+     * @param payParams
+     * @param privateKey
+     * @return
+     * @throws Exception
+     */
+    public boolean verifySign(HttpServletRequest request, String body) {
+        boolean verify = false;
+        try {
+            //微信支付官方文档
+            //第一步
+            //HTTP 头 Wechatpay-Timestamp 中的应答时间戳
+            //HTTP 头 Wechatpay-Nonce 中的应答随机串
+            //应答报文主体（Response Body），请使用原始报文主体执行验签。如果您使用了某个框架，要确保它不会篡改报文主体。对报文主体的任何篡改都会导致验证失败。
+            
+            String wechatPayTimestamp = request.getHeader("Wechatpay-Timestamp");
+            String wechatPayNonce = request.getHeader("Wechatpay-Nonce");
+            String wechatPaySerial = request.getHeader("Wechatpay-Serial"); //这是用户获取平台证书，但是这里我们使用微信支付公钥
+            //第二步
+            //按照以下规则构造应答的验签名串。签名串共有三行，行尾以\n 结束，包括最后一行。
+            //  应答时间戳\n
+            //  应答随机串\n
+            //  应答报文主体\n
+            String signStr = Stream.of(wechatPayTimestamp, wechatPayNonce, body)
+                    .collect(Collectors.joining("\n", "", "\n"));
+            //第三步
+            //微信支付的应答签名通过 HTTP 头 Wechatpay-Signature 传递
+            String wechatPaySignature = request.getHeader("Wechatpay-Signature");
+            
+            //第四步
+            //使用微信支付公钥对验签名串和签名进行 SHA256 with RSA 签名验证。
+            //获取公钥证书
+            PublicKey publicKey = loadPublicKey(wxPayConfig.getPayparams().getPublicCertPath());
+            if (publicKey != null) {
+                // 第三步：使用 SHA256withRSA 验证签名
+                Signature signature = Signature.getInstance("SHA256withRSA");
+                signature.initVerify(publicKey);
+                signature.update(signStr.getBytes(StandardCharsets.UTF_8));
+
+                // 对比请求中的签名是否匹配
+                verify = signature.verify(Base64.getDecoder().decode(wechatPaySignature));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return verify;
+    }
+    
+    /**
+     * 加载本地公钥证书。
+     *
+     * @return 公钥对象
+     */
+//    private PublicKey loadPublicKey(String certificatePath) throws Exception {
+//        try (FileInputStream fis = new FileInputStream(certificatePath)) {
+//            // 创建一个证书工厂
+//            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+//            X509Certificate cert = (X509Certificate) cf.generateCertificate(fis);
+//
+//            // 获取公钥
+//            return cert.getPublicKey();
+//        } catch (IOException e) {
+//            throw new Exception("加载公钥失败", e);
+//        }
+//    }
+
+    public PublicKey loadPublicKey(String fileName) throws Exception {
+        try {
+            // 读取公钥 PEM 文件
+            ClassPathResource resource = new ClassPathResource(fileName);
+            String content = IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
+
+            // 去除标识符
+            String publicKey = content.replace("-----BEGIN CERTIFICATE-----", "")
+                    .replace("-----END CERTIFICATE-----", "")
+                    .replaceAll("\\s+", "");
+
+            // Base64 解码
+            byte[] decodedKey = Base64.getDecoder().decode(publicKey);
+
+            // 使用 X.509 公钥规范
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodedKey);
+            return keyFactory.generatePublic(keySpec);
+        } catch (Exception e) {
+            throw new Exception("加载公钥失败", e);
+        }
+    }
+
 
     /**
      * 获取私钥。
@@ -98,5 +197,26 @@ public class WxPayUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 证书和回调报文解密
+     *
+     * @param associatedData response.body.data[i].encrypt_certificate.associated_data 附加数据包（可能为空）
+     * @param nonce          response.body.data[i].encrypt_certificate.nonce 加密使用的随机串初始化向量
+     * @param ciphertext     response.body.data[i].encrypt_certificate.ciphertext Base64编码后的密文
+     * @return the string
+     * @throws GeneralSecurityException the general security exception
+     */
+    public String decryptToString(String associatedData, String nonce, String ciphertext) {
+        String cert = null;
+        try {
+            //简化
+            AesUtil aesUtil = new AesUtil(wxPayConfig.getPayparams().getApiV3Key().getBytes(StandardCharsets.UTF_8));
+            cert = aesUtil.decryptToString(associatedData.getBytes(StandardCharsets.UTF_8), nonce.getBytes(StandardCharsets.UTF_8), ciphertext);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+        return cert;
     }
 }

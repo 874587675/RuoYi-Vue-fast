@@ -111,14 +111,15 @@ public class UserReal implements Serializable {
      */
     @TableField(value = "is_real")
     @ApiModelProperty(value = "实名状态（0-未实名  1-已实名 ）")
-    private Byte isReal;
+    private Integer isReal;
 
     /**
      * 逻辑删除状态（0-未删除 1-已删除）
      */
     @TableField(value = "is_deleted")
     @ApiModelProperty(value = "逻辑删除状态（0-未删除 1-已删除）")
-    private @TableLogic Byte isDeleted;
+    @TableLogic
+    private Integer isDeleted;
 
     /**
      * 创建时间

@@ -32,6 +32,9 @@ public class SmsUtil {
 
     @Resource
     private AliyunConfig aliyunConfig;
+    
+    @Resource
+    private RandomUtils randomUtils;
 
     public Boolean SendPhoneCodeToLoginOrRegister(String phone) throws ExecutionException, InterruptedException {
         // HttpClient Configuration
@@ -64,7 +67,7 @@ public class SmsUtil {
                         //.setConnectTimeout(Duration.ofSeconds(30))
                 ).build();
 
-        String code = RandomUtils.generateNumeric(6);//生成6位随机验证码
+        String code = randomUtils.generateNumeric(6);//生成6位随机验证码
 
         redisCache.setCacheObject(CacheConstants.CAPTCHA_CODE_KEY, phone + code, 5, TimeUnit.MINUTES);//存入redis中，设置过期时间5分钟
 

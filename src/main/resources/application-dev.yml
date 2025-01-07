@@ -261,11 +261,12 @@ wxpay:
 #    ApiV3Key: lqozpTpcLhz4NiMfL2o99zFdsI5IkEDv
 #    NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
 #    ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
-    MerchantId: 1638660091
-    AppId: wxc7fa0677f0875535
-    PrivateKeyPath: wx/apiclient_key.pem
-    MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6
-    ApiV3Key: e3a7f079c2237df57f9923e5258d5172
+    MerchantId: 1638660091  # 商户号
+    AppId: wxc7fa0677f0875535   #AppId
+    PrivateKeyPath: wx/apiclient_key.pem  
+    PublicCertPath: wx/apiclient_cert.pem
+    MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6  #平台序列号
+    ApiV3Key: e3a7f079c2237df57f9923e5258d5172      #v3密钥
     NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
     ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
 

@@ -5,14 +5,22 @@
     <!--@mbg.generated-->
     <!--@Table t_order-->
     <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="order_status_desc" jdbcType="VARCHAR" property="orderStatusDesc" />
+    <result column="trade_status" jdbcType="INTEGER" property="tradeStatus" />
+    <result column="trade_status_desc" jdbcType="VARCHAR" property="tradeStatusDesc" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updatetTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, order_no, amount, subject, create_time, update_time
+    id, open_id, order_no, amount, subject, order_status, order_status_desc, trade_status, 
+    trade_status_desc, pay_type, create_time, update_time, is_deleted
   </sql>
 </mapper>
