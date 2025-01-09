@@ -90,14 +90,7 @@ public class Order implements Serializable {
     @TableField(value = "trade_status_desc")
     @ApiModelProperty(value = "交易状态的详细描述")
     private String tradeStatusDesc;
-
-    /**
-     * 支付类型
-     */
-    @TableField(value = "pay_type")
-    @ApiModelProperty(value = "支付类型")
-    private String payType;
-
+    
     /**
      * 订单创建时间
      */

@@ -1,48 +1,36 @@
 package com.ruoyi.common.verify.wechat.util;
 
-import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.common.verify.config.WxPayConfig;
-import com.ruoyi.project.business.domain.Order;
-import com.wechat.pay.contrib.apache.httpclient.auth.AutoUpdateCertificatesVerifier;
 import com.wechat.pay.contrib.apache.httpclient.util.AesUtil;
-import com.wechat.pay.java.core.Config;
-import com.wechat.pay.java.service.payments.jsapi.JsapiService;
-import com.wechat.pay.java.service.payments.jsapi.model.Amount;
-import com.wechat.pay.java.service.payments.jsapi.model.Payer;
-import com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest;
-import com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse;
+import com.wechat.pay.java.service.payments.jsapi.model.PrepayWithRequestPaymentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.*;
+import java.util.Base64;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @ClassName:WxPayJsapiService
- * @description:
- * @author: zgc
- **/
+
 @Slf4j
 @Component
 public class WxPayUtil {
     @Resource
     private WxPayConfig wxPayConfig;
+    
     /**
      * 移动端支付请求签名
      * @param payParams
@@ -219,4 +207,43 @@ public class WxPayUtil {
         }
         return cert;
     }
+    
+    public  Map<String, String> getPayReturnMap(Object response) throws Exception {
+        // 构建JSAPI支付参数
+        if (response instanceof com.wechat.pay.java.service.payments.jsapi.model.PrepayWithRequestPaymentResponse){
+            com.wechat.pay.java.service.payments.jsapi.model.PrepayWithRequestPaymentResponse jsapiResponse =
+                    (com.wechat.pay.java.service.payments.jsapi.model.PrepayWithRequestPaymentResponse) response;
+            Map<String, String> payParams = new TreeMap<>();
+            payParams.put("appId", ((PrepayWithRequestPaymentResponse) response).getAppId());
+            payParams.put("timeStamp", jsapiResponse.getTimeStamp());
+            payParams.put("nonceStr", jsapiResponse.getNonceStr());
+            payParams.put("package", "prepay_id=" + jsapiResponse.getPackageVal());
+            payParams.put("signType", jsapiResponse.getSignType());
+            payParams.put("paySign", jsapiResponse.getPaySign());            //生成签名
+            return payParams;           // 返回支付参数
+        }
+        //构建APP支付参数
+        else if (response instanceof com.wechat.pay.java.service.payments.app.model.PrepayWithRequestPaymentResponse) {
+            com.wechat.pay.java.service.payments.app.model.PrepayWithRequestPaymentResponse appResponse =
+                    (com.wechat.pay.java.service.payments.app.model.PrepayWithRequestPaymentResponse) response;
+            Map<String, String> payParams = new TreeMap<>();
+            payParams.put("appId", appResponse.getAppid());
+            payParams.put("partnerId",appResponse.getPartnerId());
+            payParams.put("prepayId", appResponse.getPrepayId());
+            payParams.put("timeStamp", appResponse.getTimestamp());
+            payParams.put("nonceStr", appResponse.getNonceStr());
+            payParams.put("packageValue", appResponse.getPackageVal());
+            payParams.put("sign", appResponse.getSign());
+            return payParams;           // 返回支付参数
+        }
+        else if (response instanceof com.wechat.pay.java.service.payments.h5.model.PrepayResponse){
+            com.wechat.pay.java.service.payments.h5.model.PrepayResponse h5Response =
+                    (com.wechat.pay.java.service.payments.h5.model.PrepayResponse) response;
+            Map<String, String> payParams = new TreeMap<>();
+            payParams.put("h5_url", h5Response.getH5Url());
+            return payParams;           // 返回支付参数
+        }
+        return null;
+    }
+    
 }

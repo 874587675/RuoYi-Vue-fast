@@ -30,6 +30,7 @@ public enum WxPayTypeEnum {
      * NATIVE支付
      */
     NATIVE_TYPE("NATIVE", "https://api.mch.weixin.qq.com/v3/pay/transactions/native");
+    
     private String payType;
     private String payUrl;
 

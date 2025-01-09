@@ -1,7 +1,8 @@
-package com.ruoyi.common.verify.aliyun.pay.pc.paynotify.controller;
+package com.ruoyi.project.business.verify.aliyun.pay.pc.paynotify.controller;
 
 import com.ruoyi.common.verify.aliyun.pay.pc.paynotify.service.AlipayNotifyService;
 import com.ruoyi.framework.web.domain.R;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,15 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequestMapping("/api/pay/alipay")
-@ApiOperation("支付宝支付通知")
+@Api(tags = "支付宝支付通知")
 @RestController
 public class AlipayNotifyController {
     @Resource
     private AlipayNotifyService alipayNotifyService;
     
     @PostMapping("/notify")
-    private R<String> notify(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @ApiOperation("支付宝支付通知")
+    private R<String> notify(HttpServletRequest request, HttpServletResponse response) {
         try {
             boolean isVerified = alipayNotifyService.verifyNotify(request);
             if (isVerified) {

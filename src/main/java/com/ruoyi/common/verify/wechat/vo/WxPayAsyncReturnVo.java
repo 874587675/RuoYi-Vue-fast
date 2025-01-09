@@ -1,7 +1,5 @@
 package com.ruoyi.common.verify.wechat.vo;
 
-
-
 import com.ruoyi.common.verify.wechat.wxenum.WxAsyncResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;

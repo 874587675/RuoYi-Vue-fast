@@ -3,6 +3,7 @@ package com.ruoyi.project.business.verify.wechat.pay.pc.paynotify.controller;
 
 import com.ruoyi.framework.web.domain.R;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paynotify.service.WxpayNotifyService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequestMapping("/api/pay/wx")
-@ApiOperation("微信支付通知")
+@Api(tags = "微信支付通知")
 @RestController
 public class WxpayNotifyController {
    
@@ -20,6 +21,7 @@ public class WxpayNotifyController {
     private WxpayNotifyService wxpayNotifyService;
     
     @PostMapping("/wxnotify")
+    @ApiOperation("微信支付通知")
     public R<String> wxnotify(HttpServletRequest request) throws IOException {
         return R.ok(wxpayNotifyService.wxnotify(request));
     }

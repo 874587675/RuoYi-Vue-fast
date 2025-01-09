@@ -1,26 +1,27 @@
 package com.ruoyi.common.verify.wechat.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Author ZhangKeChen
- * @Date 2022/9/29
- * @Description
+ * @Description 微信创建订单对象
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WeChatCreateOrderVO {
     /**
-     * 支付类型
+     * 应用ID
      */
-    private String payType;
+    @JsonIgnore
+    private String appId;
     /**
-     * 支付价格
+     * 商户号
      */
-    private Integer totalPrice;
+    @JsonIgnore
+    private String mchId;
     /**
      * 订单号
      */
@@ -28,21 +29,40 @@ public class WeChatCreateOrderVO {
     /**
      * 商品描述
      */
+    @JsonIgnore
     private String description;
     /**
-     * 回调地址
+     * 通知地址
      */
+    @JsonIgnore
     private String notifyUrl;
     /**
-     * openid(JSAPI需提供)
+     * 订单金额信息
      */
-    private String openId;
+    private Amount amount;
+    /**
+     * 支付者信息（JSAPI需提供）
+     */
+    private Payer payer;
 
-    public WeChatCreateOrderVO(String payType,Integer totalPrice,String outTradeNo,String description,String notifyUrl){
-        this.payType = payType;
-        this.totalPrice = totalPrice;
-        this.outTradeNo = outTradeNo;
-        this.description = description;
-        this.notifyUrl = notifyUrl;
+    @Data
+    public class Amount {
+        /**
+         * 订单总金额，单位为分
+         */
+        private Integer total;
+        /**
+         * 货币类型，默认为人民币
+         */
+        private String currency = "CNY";
     }
+
+    @Data
+    public class Payer {
+        /**
+         * 用户openid
+         */
+        private String openId;
+    }
+    
 }

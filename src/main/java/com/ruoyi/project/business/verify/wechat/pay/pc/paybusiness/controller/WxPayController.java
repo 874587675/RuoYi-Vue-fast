@@ -1,30 +1,16 @@
 package com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.controller;
 
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradePagePayModel;
-import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.response.AlipayTradePagePayResponse;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.verify.config.AlipayConfigs;
-import com.ruoyi.common.verify.config.WxPayConfig;
+import com.ruoyi.common.verify.wechat.vo.QueryOrderVO;
+import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.framework.web.domain.R;
 import com.ruoyi.project.business.domain.Order;
-import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayJsapiService;
-import com.wechat.pay.java.core.Config;
-import com.wechat.pay.java.service.payments.jsapi.JsapiService;
-import com.wechat.pay.java.service.payments.jsapi.model.Payer;
-import com.wechat.pay.java.service.payments.nativepay.NativePayService;
-import com.wechat.pay.java.service.payments.nativepay.model.Amount;
-import com.wechat.pay.java.service.payments.nativepay.model.PrepayRequest;
-import com.wechat.pay.java.service.payments.nativepay.model.PrepayResponse;
+import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxPayH5Service;
+import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxPayJsapiService;
+import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxpayNativeService;
+import com.wechat.pay.java.service.payments.model.Transaction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -35,33 +21,41 @@ import java.util.Map;
 public class WxPayController {
     @Resource
     private WxPayJsapiService wxPayJsapiService;
+    @Resource
+    private WxpayNativeService wxpayNativeService;
+    @Resource
+    private WxPayH5Service wxPayH5Service;
     
     
     @PostMapping("/native/toWxPay")
-    @ApiOperation("微信Native网页环境支付订单")
-    public void toWxPayByNative() {
-//        Config config = wxPayConfig.getWxPayConfig();
-//        NativePayService service = new NativePayService.Builder().config(config).build();
-//        
-//        PrepayRequest request = new PrepayRequest();
-//        Amount amount = new Amount();
-//        amount.setTotal(100);
-//        request.setAmount(amount);
-//        request.setAppid(wxPayConfig.getPayparams().getAppId());
-//        request.setMchid(wxPayConfig.getPayparams().getMerchantId());
-//        request.setDescription("测试商品标题");
-//        request.setNotifyUrl("https://notify_url");
-//        request.setOutTradeNo("out_trade_no_001");
-//        
-//        PrepayResponse prepay = service.prepay(request);
-//        System.out.println(prepay.getCodeUrl());
+    @ApiOperation("微信Native环境支付订单")
+    public R<Map<String, String>> toWxPayByNative(@RequestBody Order order) {
+        return R.ok(wxpayNativeService.toWxPayByNative(order));
+    }
+    
+    @PostMapping("/jsapi/toWxPay")
+    @ApiOperation("微信JSAPI环境支付订单")
+    public R<Map<String, String>> toWxPayByJsapi(@RequestBody WeChatPayVO weChatPayVO) throws Exception {
+        return R.ok(wxPayJsapiService.wxPay(weChatPayVO));
     }
 
+    @PostMapping("/h5/toWxPay")
+    @ApiOperation("微信H5环境支付订单")
+    public R<Map<String, String>> toWxPayByH5(@RequestBody WeChatPayVO weChatPayVO) throws Exception {
+        return R.ok(wxPayH5Service.wxPay(weChatPayVO));
+    }
+    
+    @GetMapping("queryOrderByTransactionId")
+    @ApiOperation("通过微信订单号查询订单")
+    public R<Transaction> queryOrderByTransactionId(@RequestParam String transactionId) throws Exception {
+        // 调用微信支付查询接口
+        return R.ok(wxPayJsapiService.queryOrderByTransactionId(transactionId));
+    }
 
-
-    @PostMapping("/jsapi/toWxPay")
-    @ApiOperation("微信Native网页环境支付订单")
-    public R<Map<String, String>> toWxPayByJsapi(@RequestBody Order order) throws Exception {
-        return R.ok(wxPayJsapiService.toWxPayByJsapi(order));
+    @GetMapping("queryOrderByOutTradeNo")
+    @ApiOperation("通过微信订单号查询订单")
+    public R<Transaction> queryOrderByOutTradeNo(@RequestParam String outTradeNo) throws Exception {
+        // 调用微信支付查询接口
+        return R.ok(wxPayJsapiService.queryOrderByOutTradeNo(outTradeNo));
     }
 }

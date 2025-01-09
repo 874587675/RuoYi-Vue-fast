@@ -3,8 +3,6 @@ package com.ruoyi.common.verify.wechat.vo;
 import lombok.Data;
 
 /**
- * @Author ZhangKeChen
- * @Date 2022/9/29
  * @Description
  */
 @Data

@@ -13,7 +13,6 @@
     <result column="order_status_desc" jdbcType="VARCHAR" property="orderStatusDesc" />
     <result column="trade_status" jdbcType="INTEGER" property="tradeStatus" />
     <result column="trade_status_desc" jdbcType="VARCHAR" property="tradeStatusDesc" />
-    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
@@ -21,6 +20,6 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, open_id, order_no, amount, subject, order_status, order_status_desc, trade_status, 
-    trade_status_desc, pay_type, create_time, update_time, is_deleted
+    trade_status_desc, create_time, update_time, is_deleted
   </sql>
 </mapper>
