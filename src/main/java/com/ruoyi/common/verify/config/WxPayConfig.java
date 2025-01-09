@@ -1,6 +1,5 @@
 package com.ruoyi.common.verify.config;
 
-import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +14,7 @@ public class WxPayConfig {
     private PayParams payparams;
     // SpringBoot的Bean默认是单例的
     @Bean
-    public Config getWxPayConfig() {
+    public RSAAutoCertificateConfig getWxPayConfig() {
         return new RSAAutoCertificateConfig.Builder()
                 //商户号
                 .merchantId(payparams.getMerchantId())

@@ -70,8 +70,8 @@ public class WxPayUtil {
     
     /**
      * 移动端验签解密
-     * @param payParams
-     * @param privateKey
+     * @param request
+     * @param body
      * @return
      * @throws Exception
      */
@@ -243,6 +243,14 @@ public class WxPayUtil {
             payParams.put("h5_url", h5Response.getH5Url());
             return payParams;           // 返回支付参数
         }
+        else if (response instanceof com.wechat.pay.java.service.payments.nativepay.model.PrepayResponse){
+            com.wechat.pay.java.service.payments.nativepay.model.PrepayResponse nativeResponse =
+                    (com.wechat.pay.java.service.payments.nativepay.model.PrepayResponse) response;
+            Map<String, String> payParams = new TreeMap<>();
+            payParams.put("code_url", nativeResponse.getCodeUrl());
+            return payParams;           // 返回支付参数
+        }
+        
         return null;
     }
     

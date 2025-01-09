@@ -6,17 +6,18 @@ import com.ruoyi.common.verify.config.WxPayConfig;
 import com.ruoyi.common.verify.wechat.util.WxPayUtil;
 import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.framework.redis.RedisCache;
-import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.common.WxPayCommon;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayment;
-import com.ruoyi.project.business.verify.wechat.utils.ResultModel;
 import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.service.payments.h5.H5Service;
 import com.wechat.pay.java.service.payments.h5.model.*;
 import com.wechat.pay.java.service.payments.model.Transaction;
+import com.wechat.pay.java.service.refund.model.Refund;
+import com.wechat.pay.java.service.refund.model.RefundNotification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -77,7 +78,6 @@ public class WxPayH5Service implements WxPayment {
         } catch (Exception ex) {
             throw new ServiceException("H5下单-异常");
         }
-        
     }
 
     @Override
@@ -87,6 +87,36 @@ public class WxPayH5Service implements WxPayment {
 
     @Override
     public Transaction queryOrderByOutTradeNo(String outTradeNo) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Boolean closeByOutTradeNo(String outTradeNo) {
+        return null;
+    }
+
+    @Override
+    public Boolean refundsByOutTradeNo(String outTradeNo, String outRefundNo, Integer total, Integer refund) {
+        return null;
+    }
+
+    @Override
+    public Boolean refundsByTransactionId(String transactionId, String outRefundNo, Integer total, Integer refund) {
+        return null;
+    }
+
+    @Override
+    public Refund refundsQueryByOutRefundNo(String outRefundNo) {
+        return null;
+    }
+
+    @Override
+    public Transaction notify(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public RefundNotification refundNotify(HttpServletRequest request) {
         return null;
     }
 }

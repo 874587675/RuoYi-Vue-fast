@@ -1,9 +1,7 @@
 package com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.controller;
 
-import com.ruoyi.common.verify.wechat.vo.QueryOrderVO;
 import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.framework.web.domain.R;
-import com.ruoyi.project.business.domain.Order;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxPayH5Service;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxPayJsapiService;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl.WxpayNativeService;
@@ -29,8 +27,8 @@ public class WxPayController {
     
     @PostMapping("/native/toWxPay")
     @ApiOperation("微信Native环境支付订单")
-    public R<Map<String, String>> toWxPayByNative(@RequestBody Order order) {
-        return R.ok(wxpayNativeService.toWxPayByNative(order));
+    public R<Map<String, String>> toWxPayByNative(@RequestBody WeChatPayVO weChatPayVO) throws Exception {
+        return R.ok(wxpayNativeService.wxPay(weChatPayVO));
     }
     
     @PostMapping("/jsapi/toWxPay")
