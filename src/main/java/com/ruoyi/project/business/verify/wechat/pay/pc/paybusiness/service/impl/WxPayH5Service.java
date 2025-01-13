@@ -7,7 +7,7 @@ import com.ruoyi.common.verify.wechat.util.WxPayUtil;
 import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayment;
-import com.wechat.pay.java.core.Config;
+import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.h5.H5Service;
 import com.wechat.pay.java.service.payments.h5.model.*;
 import com.wechat.pay.java.service.payments.model.Transaction;
@@ -38,22 +38,24 @@ public class WxPayH5Service implements WxPayment {
 
     @Override
     public Map<String, String> wxPay(WeChatPayVO weChatPayVO) throws Exception {
+        log.info("WeChatPayVO: {}" , weChatPayVO);
         log.info("H5下单-开始");
 //        Map<String, String> oldPayReturnMap = redisCache.getCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO));
 //        if (oldPayReturnMap != null) {
 //            return oldPayReturnMap;
 //        }
-        Config config = wxPayConfig.getWxPayConfig();
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         // 构建service
         H5Service service = new H5Service.Builder().config(config).build();
         //构建请求
         PrepayRequest request = new PrepayRequest();
         //基础信息
-        request.setAppid(weChatPayVO.getAppId());
-        request.setMchid(weChatPayVO.getMchId());
+        request.setAppid(wxPayConfig.getPayparams().getAppId());
+        request.setMchid(wxPayConfig.getPayparams().getMerchantId());
         request.setDescription(weChatPayVO.getDescription());//商品描述
+//        request.setDescription("测试商品");//商品描述
         request.setOutTradeNo(weChatPayVO.getOutTradeNo());//商户系统内部订单号
-        request.setNotifyUrl(weChatPayVO.getNotifyUrl());
+        request.setNotifyUrl(wxPayConfig.getPayparams().getNotifyUrl());
         //订单金额信息
         Amount amount = new Amount();
         amount.setTotal(1);
@@ -73,9 +75,10 @@ public class WxPayH5Service implements WxPayment {
             log.info("H5下单-结束：{}", JSON.toJSONString(response));
             Map<String, String> payReturnMap = wxPayUtil.getPayReturnMap(response);
 //            // 将支付信息存入数据库
-//            redisCache.setCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO), payReturnMap);    
+//            redisCache.setCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO), payReturnMap);   
             return payReturnMap;
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new ServiceException("H5下单-异常");
         }
     }

@@ -26,7 +26,6 @@ public class WeChatPayVO {
     /**
      * 商品描述
      */
-    @JsonIgnore
     private String description;
     /**
      * 通知地址

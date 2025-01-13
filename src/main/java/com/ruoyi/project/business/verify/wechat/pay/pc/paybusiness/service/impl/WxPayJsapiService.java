@@ -39,9 +39,7 @@ public class WxPayJsapiService implements WxPayment {
     private WxPayUtil wxPayUtil;
     @Resource
     private RedisCache redisCache;
-
-    public RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
-
+    
     /**
      * 这是自己写的支付，需要自己签名
      * 另外一种写法是调用微信写好的
@@ -92,6 +90,7 @@ public class WxPayJsapiService implements WxPayment {
         if (oldPayReturnMap != null) {
             return oldPayReturnMap;
         }
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
         //构建请求
         PrepayRequest request = new PrepayRequest();
@@ -128,6 +127,7 @@ public class WxPayJsapiService implements WxPayment {
     @Override
     public Transaction queryOrderByTransactionId(String transactionId) throws Exception {
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
         QueryOrderByIdRequest request = new QueryOrderByIdRequest();
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
@@ -144,6 +144,7 @@ public class WxPayJsapiService implements WxPayment {
     @Override
     public Transaction queryOrderByOutTradeNo(String outTradeNo) throws Exception {
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
         QueryOrderByOutTradeNoRequest request = new QueryOrderByOutTradeNoRequest();
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
@@ -161,6 +162,7 @@ public class WxPayJsapiService implements WxPayment {
     public Boolean closeByOutTradeNo(String outTradeNo) {
         log.info("关闭订单-开始");
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
         //构建请求
         CloseOrderRequest request = new CloseOrderRequest();
@@ -179,8 +181,8 @@ public class WxPayJsapiService implements WxPayment {
     public Boolean refundsByOutTradeNo(String outTradeNo,String outRefundNo,Integer total, Integer refund) {
         log.info("申请退款-开始");
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         RefundService service = new RefundService.Builder().config(config).build();
-
         //构建请求
         CreateRequest request = new CreateRequest();
         request.setOutTradeNo(outTradeNo);
@@ -192,7 +194,6 @@ public class WxPayJsapiService implements WxPayment {
         amountReq.setTotal(total + 0l);
         amountReq.setCurrency("CNY");
         request.setAmount(amountReq);
-
         try {
             service.create(request);
             log.info("申请退款-结束：{}",true);
@@ -206,6 +207,7 @@ public class WxPayJsapiService implements WxPayment {
     public Boolean refundsByTransactionId(String transactionId,String outRefundNo,Integer total, Integer refund) {
         log.info("申请退款-开始");
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         RefundService service = new RefundService.Builder().config(config).build();
         //构建请求
         CreateRequest request = new CreateRequest();
@@ -218,7 +220,6 @@ public class WxPayJsapiService implements WxPayment {
         amountReq.setTotal(total + 0l);
         amountReq.setCurrency("CNY");
         request.setAmount(amountReq);
-
         try {
             service.create(request);
             log.info("申请退款-结束：{}", true);
@@ -232,6 +233,7 @@ public class WxPayJsapiService implements WxPayment {
     public Refund refundsQueryByOutRefundNo(String outRefundNo) {
         log.info("查询单笔退款-开始");
         // 构建service
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         RefundService service = new RefundService.Builder().config(config).build();
         //构建请求
         QueryByOutRefundNoRequest request = new QueryByOutRefundNoRequest();
@@ -251,13 +253,14 @@ public class WxPayJsapiService implements WxPayment {
         try {
             String body = IoUtil.getUtf8Reader(request.getInputStream()).readLine();
             RequestParam requestParam = new RequestParam.Builder()
-                    .serialNumber(request.getHeader("Wechatpay-Serial"))
-                    .nonce(request.getHeader("Wechatpay-Nonce"))
-                    .signature(request.getHeader("Wechatpay-Signature"))
-                    .timestamp(request.getHeader("Wechatpay-Timestamp"))
-                    .signType(request.getHeader("Wechatpay-Signature-Type"))
+                    .serialNumber(request.getHeader(WxPayCommon.WECHATPAY_SERIAL))
+                    .nonce(request.getHeader(WxPayCommon.WECHATPAY_NONCE))
+                    .signature(request.getHeader(WxPayCommon.WECHATPAY_SIGNATURE))
+                    .timestamp(request.getHeader(WxPayCommon.WECHATPAY_TIMESTAMP))
+                    .signType(request.getHeader(WxPayCommon.WECHATPAY_SIGN_TYPE))
                     .body(body)
                     .build();
+            RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
             NotificationParser parser = new NotificationParser(config);
             // 以支付通知回调为例，验签、解密并转换成 Transaction
             Transaction transaction = parser.parse(requestParam, Transaction.class);
@@ -274,13 +277,14 @@ public class WxPayJsapiService implements WxPayment {
         try {
             String body = IoUtil.getUtf8Reader(request.getInputStream()).readLine();
             RequestParam requestParam = new RequestParam.Builder()
-                    .serialNumber(request.getHeader("Wechatpay-Serial"))
-                    .nonce(request.getHeader("Wechatpay-Nonce"))
-                    .signature(request.getHeader("Wechatpay-Signature"))
-                    .timestamp(request.getHeader("Wechatpay-Timestamp"))
-                    .signType(request.getHeader("Wechatpay-Signature-Type"))
+                    .serialNumber(request.getHeader(WxPayCommon.WECHATPAY_SERIAL))
+                    .nonce(request.getHeader(WxPayCommon.WECHATPAY_NONCE))
+                    .signature(request.getHeader(WxPayCommon.WECHATPAY_SIGNATURE))
+                    .timestamp(request.getHeader(WxPayCommon.WECHATPAY_TIMESTAMP))
+                    .signType(request.getHeader(WxPayCommon.WECHATPAY_SIGN_TYPE))
                     .body(body)
                     .build();
+            RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
             NotificationParser parser = new NotificationParser(config);
             // 以支付通知回调为例，验签、解密并转换成 Transaction
             RefundNotification refundNotification = parser.parse(requestParam, RefundNotification.class);

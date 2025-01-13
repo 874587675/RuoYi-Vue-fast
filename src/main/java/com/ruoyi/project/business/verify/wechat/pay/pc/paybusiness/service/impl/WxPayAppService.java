@@ -8,7 +8,7 @@ import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.common.WxPayCommon;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayment;
-import com.wechat.pay.java.core.Config;
+import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.app.AppServiceExtension;
 import com.wechat.pay.java.service.payments.app.model.Amount;
 import com.wechat.pay.java.service.payments.app.model.PrepayWithRequestPaymentResponse;
@@ -44,7 +44,7 @@ public class WxPayAppService implements WxPayment {
         if (oldPayReturnMap != null) {
             return oldPayReturnMap;
         }
-        Config config = wxPayConfig.getWxPayConfig();
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         // 构建service
         AppServiceExtension service = new AppServiceExtension.Builder().config(config).build();
         //构建请求
@@ -55,7 +55,6 @@ public class WxPayAppService implements WxPayment {
         request.setDescription(weChatPayVO.getDescription());//商品描述
         request.setOutTradeNo(weChatPayVO.getOutTradeNo());//商户系统内部订单号
         request.setNotifyUrl(weChatPayVO.getNotifyUrl());
-//        request.setAttach(attach);//附加数据
         //订单金额信息
         Amount amount = new Amount();
         amount.setTotal(1);

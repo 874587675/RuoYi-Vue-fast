@@ -6,7 +6,7 @@ import com.ruoyi.common.verify.config.WxPayConfig;
 import com.ruoyi.common.verify.wechat.util.WxPayUtil;
 import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
 import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayment;
-import com.wechat.pay.java.core.Config;
+import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.model.Transaction;
 import com.wechat.pay.java.service.payments.nativepay.NativePayService;
 import com.wechat.pay.java.service.payments.nativepay.model.Amount;
@@ -37,7 +37,7 @@ public class WxpayNativeService implements WxPayment {
     @Override
     public Map<String, String> wxPay(WeChatPayVO weChatPayVO) throws Exception {
         log.info("Native下单(扫码支付)-开始");
-        Config config = wxPayConfig.getWxPayConfig();
+        RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
         // 构建service
         NativePayService service = new NativePayService.Builder().config(config).build();
         //构建请求
