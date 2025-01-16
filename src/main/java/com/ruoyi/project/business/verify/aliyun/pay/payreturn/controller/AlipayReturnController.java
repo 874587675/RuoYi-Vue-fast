@@ -1,8 +1,8 @@
-package com.ruoyi.project.business.verify.aliyun.pay.pc.payreturn.controller;
+package com.ruoyi.project.business.verify.aliyun.pay.payreturn.controller;
 
 
 import com.ruoyi.framework.web.domain.R;
-import com.ruoyi.project.business.verify.aliyun.pay.pc.payreturn.service.AlipayReturnService;
+import com.ruoyi.project.business.verify.aliyun.pay.payreturn.service.AlipayReturnService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;

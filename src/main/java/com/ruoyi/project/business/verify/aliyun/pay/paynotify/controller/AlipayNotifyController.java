@@ -1,8 +1,8 @@
-package com.ruoyi.project.business.verify.aliyun.pay.pc.paynotify.controller;
+package com.ruoyi.project.business.verify.aliyun.pay.paynotify.controller;
 
 
 import com.ruoyi.framework.web.domain.R;
-import com.ruoyi.project.business.verify.aliyun.pay.pc.paynotify.service.AlipayNotifyService;
+import com.ruoyi.project.business.verify.aliyun.pay.paynotify.service.AlipayNotifyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

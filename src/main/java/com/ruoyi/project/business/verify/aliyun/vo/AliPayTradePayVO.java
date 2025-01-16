@@ -1,4 +1,4 @@
-package com.ruoyi.project.business.verify.aliyun.pay.vo;
+package com.ruoyi.project.business.verify.aliyun.vo;
 
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import lombok.Data;
@@ -12,5 +12,5 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class AliPayPayVO extends AlipayTradePagePayModel {
+public class AliPayTradePayVO extends AlipayTradePagePayModel {
 }
