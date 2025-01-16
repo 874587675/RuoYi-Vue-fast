@@ -1,7 +1,8 @@
 package com.ruoyi.project.business.verify.aliyun.pay.pc.paynotify.controller;
 
-import com.ruoyi.common.verify.aliyun.pay.pc.paynotify.service.AlipayNotifyService;
+
 import com.ruoyi.framework.web.domain.R;
+import com.ruoyi.project.business.verify.aliyun.pay.pc.paynotify.service.AlipayNotifyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RequestMapping("/api/pay/alipay")
 @Api(tags = "支付宝支付通知")

@@ -1,20 +1,22 @@
-package com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.impl;
+package com.ruoyi.project.business.verify.wechat.pay.paybusiness.service.impl;
 
 import cn.hutool.core.io.IoUtil;
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.verify.config.WxPayConfig;
 import com.ruoyi.common.verify.wechat.util.WxPayUtil;
-import com.ruoyi.common.verify.wechat.vo.WeChatPayVO;
+import com.ruoyi.project.business.verify.wechat.pay.paybusiness.service.WxPaymentFactory;
+import com.ruoyi.project.business.verify.wechat.vo.WeChatAppPayVO;
+
 import com.ruoyi.framework.redis.RedisCache;
-import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.common.WxPayCommon;
-import com.ruoyi.project.business.verify.wechat.pay.pc.paybusiness.service.WxPayment;
+import com.ruoyi.project.business.verify.wechat.pay.paybusiness.common.WxPayCommon;
+
 import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.core.notification.NotificationParser;
 import com.wechat.pay.java.core.notification.RequestParam;
-import com.wechat.pay.java.service.payments.jsapi.JsapiServiceExtension;
-import com.wechat.pay.java.service.payments.jsapi.model.Amount;
-import com.wechat.pay.java.service.payments.jsapi.model.*;
+import com.wechat.pay.java.service.payments.app.AppServiceExtension;
+import com.wechat.pay.java.service.payments.app.model.Amount;
+import com.wechat.pay.java.service.payments.app.model.*;
 import com.wechat.pay.java.service.payments.model.Transaction;
 import com.wechat.pay.java.service.refund.RefundService;
 import com.wechat.pay.java.service.refund.model.*;
@@ -26,13 +28,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @ClassName: WxPayJsapiService
- * @description: 微信支付jsapi支付
+ * @ClassName:WxPayAppService
+ * @description:
  * @author: zgc
  **/
-@Service
 @Slf4j
-public class WxPayJsapiService implements WxPayment {
+@Service
+public class WxPayAppService implements WxPaymentFactory {
     @Resource
     private WxPayConfig wxPayConfig;
     @Resource
@@ -40,87 +42,31 @@ public class WxPayJsapiService implements WxPayment {
     @Resource
     private RedisCache redisCache;
     
-    /**
-     * 这是自己写的支付，需要自己签名
-     * 另外一种写法是调用微信写好的
-     * @param weChatPayVO
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Map<String, String> wxPay(WeChatPayVO weChatPayVO) throws Exception {
-        /*
-        第一种自己写的
-         */
-//        Map<String, String> oldPayReturnMap = redisCache.getCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO));
-//        if (oldPayReturnMap != null) {
-//            return oldPayReturnMap;
-//        }
-//        Config config = wxPayConfig.getWxPayConfig();
-//        JsapiService service = new JsapiService.Builder().config(config).build();
-//        PrepayRequest request = new PrepayRequest();
-//        Amount amount = new Amount();
-//        amount.setTotal(1);
-//        request.setAmount(amount);
-//        request.setAppid(wxPayConfig.getPayparams().getAppId());
-//        request.setMchid(wxPayConfig.getPayparams().getMerchantId());
-//        request.setDescription(weChatPayVO.getDescription());     //商品信息描述
-//        request.setNotifyUrl(wxPayConfig.getPayparams().getNotifyUrl());    // 设置回调地址
-//        request.setOutTradeNo(weChatPayVO.getOutTradeNo());
-//        Payer payer = new Payer();
-//
-//        String openId = "ou6YH41g7ceN1XECAoVaCgKeYAco";
-//        weChatPayVO.getPayer().setOpenId(openId); //后面删掉就行
-//
-//        payer.setOpenid(weChatPayVO.getPayer().getOpenId());
-//        request.setPayer(payer);
-//        PrepayResponse prepayResponse = service.prepay(request);
-//        // 获取返回的prepay_id
-//        String prepayId = prepayResponse.getPrepayId();
-//        //生成签名 根据微信返回拼接参数返回
-//        Map<String, String> payReturnMap = wxPayUtil.getPayReturnMap(prepayId);
-//        // 将支付信息存入数据库
-//        redisCache.setCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO), payReturnMap);
-//        return payReturnMap;
-
-        /*
-        第二种 微信官方提供的
-         */
-        Map<String, String> oldPayReturnMap = redisCache.getCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO));
-        if (oldPayReturnMap != null) {
-            return oldPayReturnMap;
-        }
+    public Map<String, String> wxPay(WeChatAppPayVO weChatAppPayVO) throws Exception {
+        log.info("APP下单-开始");
+        
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
-        JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
+        // 构建service
+        AppServiceExtension service = new AppServiceExtension.Builder().config(config).build();
         //构建请求
-        PrepayRequest request = new PrepayRequest();
+        com.wechat.pay.java.service.payments.app.model.PrepayRequest request = new com.wechat.pay.java.service.payments.app.model.PrepayRequest();
         //基础信息
         request.setAppid(wxPayConfig.getPayparams().getAppId());
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
-        request.setDescription(weChatPayVO.getDescription());     //商品信息描述
-        request.setNotifyUrl(wxPayConfig.getPayparams().getNotifyUrl());    // 设置回调地址
-        request.setOutTradeNo(weChatPayVO.getOutTradeNo());
-//        request.setAttach(attach);//附加数据
+        request.setDescription(weChatAppPayVO.getDescription());//商品描述
+        request.setOutTradeNo(weChatAppPayVO.getOutTradeNo());//商户系统内部订单号
+        request.setNotifyUrl(wxPayConfig.getPayparams().getNotifyUrl());
         //订单金额信息
         Amount amount = new Amount();
         amount.setTotal(1);
         request.setAmount(amount);
-        
-        //用户在直连商户appid下的唯一标识。 下单前需获取到用户的Openid
-        Payer payer = new Payer();
-        String openId = "ou6YH41g7ceN1XECAoVaCgKeYAco";
-        weChatPayVO.getPayer().setOpenId(openId); //后面删掉就行
-        payer.setOpenid(weChatPayVO.getPayer().getOpenId());
-        request.setPayer(payer);
         try {
             PrepayWithRequestPaymentResponse response = service.prepayWithRequestPayment(request);
-            log.info("JSAPI下单-结果：{}", JSON.toJSONString(response));
+            log.info("APP下单-结束：{}", JSON.toJSONString(response));
             Map<String, String> payReturnMap = wxPayUtil.getPayReturnMap(response);
-            // 将支付信息存入数据库
-            redisCache.setCacheObject(WxPayCommon.getWxPayCacheKey(weChatPayVO), payReturnMap);
             return payReturnMap;
         } catch (Exception ex) {
-            throw new ServiceException("JSAPI下单-失败");
+            throw new ServiceException("APP下单-失败");
         }
     }
 
@@ -128,7 +74,7 @@ public class WxPayJsapiService implements WxPayment {
     public Transaction queryOrderByTransactionId(String transactionId) throws Exception {
         // 构建service
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
-        JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
+        AppServiceExtension service = new AppServiceExtension.Builder().config(config).build();
         QueryOrderByIdRequest request = new QueryOrderByIdRequest();
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
         request.setTransactionId(transactionId);
@@ -145,7 +91,7 @@ public class WxPayJsapiService implements WxPayment {
     public Transaction queryOrderByOutTradeNo(String outTradeNo) throws Exception {
         // 构建service
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
-        JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
+        AppServiceExtension service = new AppServiceExtension.Builder().config(config).build();
         QueryOrderByOutTradeNoRequest request = new QueryOrderByOutTradeNoRequest();
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
         request.setOutTradeNo(outTradeNo);
@@ -163,7 +109,7 @@ public class WxPayJsapiService implements WxPayment {
         log.info("关闭订单-开始");
         // 构建service
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
-        JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(config).build();
+        AppServiceExtension service = new AppServiceExtension.Builder().config(config).build();
         //构建请求
         CloseOrderRequest request = new CloseOrderRequest();
         request.setMchid(wxPayConfig.getPayparams().getMerchantId());
@@ -178,7 +124,7 @@ public class WxPayJsapiService implements WxPayment {
     }
 
     @Override
-    public Boolean refundsByOutTradeNo(String outTradeNo,String outRefundNo,Integer total, Integer refund) {
+    public Boolean refundsByOutTradeNo(String outTradeNo, String outRefundNo, Integer total, Integer refund) {
         log.info("申请退款-开始");
         // 构建service
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();
@@ -204,7 +150,7 @@ public class WxPayJsapiService implements WxPayment {
     }
 
     @Override
-    public Boolean refundsByTransactionId(String transactionId,String outRefundNo,Integer total, Integer refund) {
+    public Boolean refundsByTransactionId(String transactionId, String outRefundNo, Integer total, Integer refund) {
         log.info("申请退款-开始");
         // 构建service
         RSAAutoCertificateConfig config = wxPayConfig.getWxPayConfig();

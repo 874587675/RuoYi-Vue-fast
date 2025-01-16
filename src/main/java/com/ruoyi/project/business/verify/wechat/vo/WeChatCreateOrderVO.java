@@ -1,4 +1,4 @@
-package com.ruoyi.common.verify.wechat.vo;
+package com.ruoyi.project.business.verify.wechat.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
