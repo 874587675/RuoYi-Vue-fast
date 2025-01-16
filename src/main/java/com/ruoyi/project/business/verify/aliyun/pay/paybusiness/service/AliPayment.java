@@ -22,4 +22,6 @@ public interface AliPayment {
     String refund(AliPayTradeRefundVO aliPayTradeRefundVO) throws AlipayApiException;
     
     String refundQuery(AliPayTradeRefundQueryVO aliPayTradeRefundQueryVO) throws AlipayApiException;
+    
+    String queryDownloadBillUrl(AliPayDataBillDownloadVO aliPayDataBillDownloadVO) throws AlipayApiException;
 }

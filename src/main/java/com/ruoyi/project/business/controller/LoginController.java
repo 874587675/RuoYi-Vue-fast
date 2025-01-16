@@ -1,13 +1,11 @@
 package com.ruoyi.project.business.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.verify.aliyun.sms.SmsUtil;
 import com.ruoyi.framework.security.LoginBody;
 import com.ruoyi.framework.security.RegisterBody;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.domain.R;
-import com.ruoyi.project.business.domain.User;
 import com.ruoyi.project.business.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 
-@Api(tags = "登录注册模块")
+
 @RestController
 @RequestMapping("/index")
+@Api(tags = "登录注册管理模块")
 public class LoginController {
     @Resource
     private UserService userService;

@@ -22,7 +22,7 @@ public class AlipayReturnController {
     private AlipayReturnService alipayReturnService;
     
     @RequestMapping("/return")
-    @ApiOperation("支付宝支付回调")
+    @ApiOperation("支付宝支付回调方法")
     public R<String> returnUrl(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         alipayReturnService.returnUrl(request,response);

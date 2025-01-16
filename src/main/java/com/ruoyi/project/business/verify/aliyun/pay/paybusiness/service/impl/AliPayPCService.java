@@ -2,6 +2,7 @@ package com.ruoyi.project.business.verify.aliyun.pay.paybusiness.service.impl;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.AlipayConfig;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.diagnosis.DiagnosisUtils;
 import com.alipay.api.domain.*;
@@ -41,8 +42,7 @@ public class AliPayPCService implements AliPayment {
         model.setOutTradeNo(aliPayTradePayVO.getOutTradeNo());    // 商户订单号 必选
         model.setTotalAmount(String.valueOf(aliPayTradePayVO.getTotalAmount()));    // 订单金额 必选
         model.setSubject(aliPayTradePayVO.getSubject());   // 订单标题 必选
-        model.setProductCode(aliPayConfigs.getPayparams().getProductCode());   // 销售产品码 必选   
-
+        model.setProductCode(aliPayConfigs.getPayparams().getProductCode());   // 销售产品码 必选
         model.setQrPayMode("2");    // 跳转模式 可选
         // 请求支付
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
@@ -58,7 +58,7 @@ public class AliPayPCService implements AliPayment {
             log.info("支付订单接口调用失败");
             String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
             log.info("支付支付宝订单诊断信息:{}", diagnosisUrl);
-            throw new ServiceException("支付宝支付请求失败");
+            throw new ServiceException("支付宝支付请求操作失败");
         }
     }
 
@@ -82,7 +82,7 @@ public class AliPayPCService implements AliPayment {
             //sdk版本是"4.38.0.ALL"及以上,可以参考下面的示例获取诊断链接
             String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
             log.info("关闭支付宝订单诊断信息:{}", diagnosisUrl);
-            throw new ServiceException("关闭支付宝订单失败");
+            throw new ServiceException("关闭支付宝订单操作失败");
         }
     }
 
@@ -105,7 +105,7 @@ public class AliPayPCService implements AliPayment {
             // sdk版本是"4.38.0.ALL"及以上,可以参考下面的示例获取诊断链接
             String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
             log.info("查询支付宝订单诊断信息:{}", diagnosisUrl);
-            throw new ServiceException("查询支付宝订单失败");
+            throw new ServiceException("查询支付宝订单操作失败");
         }
     }
 
@@ -128,7 +128,7 @@ public class AliPayPCService implements AliPayment {
             log.info("退款订单接口调用失败");
             String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
             log.info("退款支付宝订单诊断信息:{}", diagnosisUrl);
-            throw new ServiceException("退款支付宝订单失败");
+            throw new ServiceException("退款支付宝订单操作失败");
         }
     }
 
@@ -136,7 +136,6 @@ public class AliPayPCService implements AliPayment {
     public String refundQuery(AliPayTradeRefundQueryVO aliPayTradeRefundQueryVO) throws AlipayApiException {
         // 初始化SDK
         AlipayClient alipayClient = new DefaultAlipayClient(aliPayConfigs.getAlipayConfig());
-
         // 构造请求参数以调用接口
         AlipayTradeFastpayRefundQueryRequest request = new AlipayTradeFastpayRefundQueryRequest();
         AlipayTradeFastpayRefundQueryModel model = new AlipayTradeFastpayRefundQueryModel();
@@ -146,16 +145,11 @@ public class AliPayPCService implements AliPayment {
         model.setOutTradeNo(aliPayTradeRefundQueryVO.getOutTradeNo());
         // 设置退款请求号
         model.setOutRequestNo(aliPayTradeRefundQueryVO.getOutRequestNo()); //如果在退款请求时未传入，则该值为创建交易时的商户订单号。
-
         // 设置查询选项
         List<String> queryOptions = new ArrayList<String>();
         queryOptions.add("refund_detail_item_list");
         model.setQueryOptions(queryOptions);
-
         request.setBizModel(model);
-        // 第三方代调用模式下请设置app_auth_token
-        // request.putOtherTextParam("app_auth_token", "<-- 请填写应用授权令牌 -->");
-
         AlipayTradeFastpayRefundQueryResponse response = alipayClient.execute(request);
         log.info("查询支付宝退款订单响应信息:{}", response.getBody());
         if (response.isSuccess()) {
@@ -163,11 +157,32 @@ public class AliPayPCService implements AliPayment {
             return response.getBody();
         } else {
             log.info("退款订单接口调用失败");
-            // sdk版本是"4.38.0.ALL"及以上,可以参考下面的示例获取诊断链接
             String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
             log.info("查询支付宝退款订单诊断信息:{}", diagnosisUrl);
-            throw new ServiceException("查询支付宝退款订单失败");
+            throw new ServiceException("查询支付宝退款订单操作失败");
         }
+    }
+
+    @Override
+    public String queryDownloadBillUrl(AliPayDataBillDownloadVO aliPayDataBillDownloadVO) throws AlipayApiException {
+        AlipayClient alipayClient = new DefaultAlipayClient(aliPayConfigs.getAlipayConfig());
+        AlipayDataDataserviceBillDownloadurlQueryRequest request = new AlipayDataDataserviceBillDownloadurlQueryRequest();
+        AlipayDataDataserviceBillDownloadurlQueryModel model = new AlipayDataDataserviceBillDownloadurlQueryModel();
+        model.setBillType(aliPayDataBillDownloadVO.getBillType());
+        model.setBillDate(aliPayDataBillDownloadVO.getBillDate());
+        request.setBizModel(model);
+        AlipayDataDataserviceBillDownloadurlQueryResponse response = alipayClient.execute(request);
+        log.info("下载支付宝账单响应信息:{}", response.getBody());
+        if (response.isSuccess()) {
+            log.info("下载支付宝账单接口调用成功");
+            return response.getBody();  // 获取账单下载URL
+        } else {
+            log.info("下载支付宝账单接口调用失败");
+            String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
+            log.info("下载支付宝账单诊断信息:{}", diagnosisUrl);
+            throw new ServiceException("下载支付宝账单操作失败");
+        }
+
     }
 }
 

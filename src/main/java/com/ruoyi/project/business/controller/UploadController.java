@@ -16,10 +16,8 @@ import javax.annotation.Resource;
 @RestController
 @Api(tags = "上传文件模块")
 public class UploadController {
-    
     @Resource
     private OssUtil ossUtil;
-    
     @ApiOperation("上传图片")
     @PostMapping("/uploadImage")
     public R<String> uploadImage(@RequestParam MultipartFile file) {

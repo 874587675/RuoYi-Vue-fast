@@ -3,10 +3,7 @@ package com.ruoyi.project.business.verify.aliyun.pay.paybusiness.controller;
 import com.alipay.api.AlipayApiException;
 import com.ruoyi.framework.web.domain.R;
 import com.ruoyi.project.business.verify.aliyun.pay.paybusiness.service.impl.AliPayPCService;
-import com.ruoyi.project.business.verify.aliyun.vo.AliPayTradeCloseVO;
-import com.ruoyi.project.business.verify.aliyun.vo.AliPayTradePayVO;
-import com.ruoyi.project.business.verify.aliyun.vo.AliPayTradeQueryVO;
-import com.ruoyi.project.business.verify.aliyun.vo.AliPayTradeVO;
+import com.ruoyi.project.business.verify.aliyun.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +36,23 @@ public class AliPayPCController {
     @ApiOperation("查询支付宝PC网页环境支付订单")
     public R<String> query(@RequestBody AliPayTradeQueryVO aliPayTradeQueryVO) throws AlipayApiException {
         return R.ok(aliPayPCService.query(aliPayTradeQueryVO));
+    }
+    
+    @PostMapping("/pc/refundQuery")
+    @ApiOperation("查询支付宝PC网页环境的退款订单")
+    public R<String> refundQuery(@RequestBody AliPayTradeRefundQueryVO aliPayTradeRefundQueryVO) throws AlipayApiException {
+        return R.ok(aliPayPCService.refundQuery(aliPayTradeRefundQueryVO));
+    }
+    
+    @PostMapping("/pc/refund")
+    @ApiOperation("退款支付宝PC网页环境的订单")
+    public R<String> refund(@RequestBody AliPayTradeRefundVO aliPayTradeRefundVO) throws AlipayApiException {
+        return R.ok(aliPayPCService.refund(aliPayTradeRefundVO));
+    }
+    
+    @PostMapping("/pc/queryDownloadBillUrl")
+    @ApiOperation("查询支付宝PC网页环境的对账单下载地址")
+    public R<String> queryDownloadBillUrl(@RequestBody AliPayDataBillDownloadVO aliPayDataBillDownloadVO) throws AlipayApiException {
+        return R.ok(aliPayPCService.queryDownloadBillUrl(aliPayDataBillDownloadVO));
     }
 }
