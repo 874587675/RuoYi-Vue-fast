@@ -1,7 +1,8 @@
 package com.ruoyi.project.business.controller;
 
-import com.ruoyi.common.verify.aliyun.oss.OssUtil;
+
 import com.ruoyi.framework.web.domain.R;
+import com.ruoyi.project.business.util.aliyun.oss.OssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

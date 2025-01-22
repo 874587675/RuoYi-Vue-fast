@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.enums.OrderStatus;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.random.RandomUtils;
-import com.ruoyi.project.business.verify.wechat.vo.WeChatCreateOrderVO;
+import com.ruoyi.project.business.pay.wechat.vo.WeChatCreateOrderVO;
 import com.ruoyi.project.business.domain.Order;
 import com.ruoyi.project.business.mapper.OrderMapper;
 import com.ruoyi.project.business.service.OrderService;
+import com.ruoyi.project.business.vo.OrderVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,15 +21,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Resource
     private RandomUtils randomUtils;
     @Override
-    public String createOrder(WeChatCreateOrderVO weChatCreateOrderVO) {
-            if (weChatCreateOrderVO == null) {
+    public String createOrder(OrderVO orderVO) {
+            if (orderVO == null) {
                 throw new ServiceException("下单参数不能为空");
             }
             Order order = Order.builder()
-                    .openId(weChatCreateOrderVO.getPayer().getOpenId())
+                    .openId(orderVO.getOpenId())
                     .orderNo("T" + randomUtils.generateNumeric(11))
-                    .amount(BigDecimal.valueOf(weChatCreateOrderVO.getAmount().getTotal()).divide(BigDecimal.valueOf(100)))
-                    .subject(weChatCreateOrderVO.getDescription())
+                    .amount(orderVO.getAmount().divide(BigDecimal.valueOf(100)))
+                    .subject(orderVO.getSubject())
                     .orderStatus(OrderStatus.WAIT_PAY.getCode())
                     .orderStatusDesc(OrderStatus.WAIT_PAY.getStatus())
                     .build();
@@ -38,6 +39,5 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             } else {
                 return "订单创建成功";
             }
-        
     }
 }

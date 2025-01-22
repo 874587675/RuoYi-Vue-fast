@@ -1,10 +1,9 @@
 package com.ruoyi.project.business.service;
 
-import com.ruoyi.project.business.verify.wechat.vo.WeChatCreateOrderVO;
-import com.ruoyi.project.business.domain.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.project.business.domain.Order;
+import com.ruoyi.project.business.vo.OrderVO;
+
 public interface OrderService extends IService<Order>{
-
-
-    String createOrder(WeChatCreateOrderVO weChatCreateOrderVO);
+    String createOrder(OrderVO orderVO);
 }

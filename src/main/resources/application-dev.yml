@@ -180,7 +180,7 @@ mybatis-plus:
     db-config:
       id-type: none
       # 配置逻辑删除的字段
-      logic-delete-field-name: is_deleted
+      logic-delete-field: is_deleted
       # 配置逻辑删除的字段值
       logic-delete-value: 1
   configLocation: classpath:mybatis/mybatis-config.xml
@@ -243,13 +243,13 @@ alipay:
     MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY} 
     AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY} 
     GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do #沙箱环境
-    NotifyUrl: https://www.zgcbuild.top/api/pay/alipay/notify  #异步通知地址
-    ReturnUrl: https://www.zgcbuild.top/api/pay/alipay/return  #同步通知地址
+    NotifyUrl: https://www.zgcbuild.top/  #异步通知地址
+    ReturnUrl: https://www.zgcbuild.top/pay/alipay/pc/return  #回调地址
     SignType: RSA2  #签名类型
     Charset: utf-8  #字符编码
     Format: json  #返回格式
     Version: 1.0  #版本号
-    ProductCode: FAST_INSTANT_TRADE_PAY #产品码
+    ProductCode: FAST_INSTANT_TRADE_PAY #产品码 根据使用不同的支付场景更换产品码
 
 #微信支付相关配置
 wxpay:

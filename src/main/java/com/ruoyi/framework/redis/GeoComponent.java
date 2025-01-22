@@ -5,7 +5,6 @@ import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.GeoOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class GeoComponent {
      * @param longitude 经度
      * @param latitude 纬度
      * @param member 成员
-     * @return
+     * @return 添加成功的成员数量
      */
     public Long geoAdd(String key, double longitude, double latitude, String member){
         return redisTemplate.opsForGeo().add(key, new Point(longitude, latitude), member);
@@ -120,4 +119,6 @@ public class GeoComponent {
         return redisTemplate.opsForGeo().radius(key, member, new Distance(v, metric), args);
     }
 
+
+    
 }
