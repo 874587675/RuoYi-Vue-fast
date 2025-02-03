@@ -51,18 +51,18 @@ public class GeoComponent {
      * @param key
      * @param member1 成员1
      * @param member2 成员2
-     * @return
+     * @return Distance
      */
     public Distance geoDist(String key, String member1, String member2){
         return redisTemplate.opsForGeo().distance(key, member1, member2);
     }
     /**
-     * 获取两个成员的距离
+     * 获取两个成员的距离(距离单位)
      * @param key
      * @param member1
      * @param member2
      * @param metric 度规（枚举）（km、m）
-     * @return
+     * @return Distance
      */
     public Distance geoDist(String key, String member1, String member2, Metrics metric){
         return redisTemplate.opsForGeo().distance(key, member1, member2, metric);
@@ -118,7 +118,6 @@ public class GeoComponent {
     public GeoResults<RedisGeoCommands.GeoLocation<String>> geoRadiusByMember(String key, String member, double v, Metrics metric, RedisGeoCommands.GeoRadiusCommandArgs args){
         return redisTemplate.opsForGeo().radius(key, member, new Distance(v, metric), args);
     }
-
-
+    
     
 }
