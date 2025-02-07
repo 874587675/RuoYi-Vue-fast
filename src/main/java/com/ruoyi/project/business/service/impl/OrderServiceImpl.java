@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.enums.OrderStatus;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.random.RandomUtils;
-import com.ruoyi.project.business.pay.wechat.vo.WeChatCreateOrderVO;
 import com.ruoyi.project.business.domain.Order;
 import com.ruoyi.project.business.mapper.OrderMapper;
 import com.ruoyi.project.business.service.OrderService;

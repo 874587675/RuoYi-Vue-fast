@@ -2,7 +2,6 @@ package com.ruoyi.project.business.controller;
 
 import com.ruoyi.framework.web.domain.R;
 import com.ruoyi.project.business.service.OrderService;
-import com.ruoyi.project.business.pay.wechat.vo.WeChatCreateOrderVO;
 import com.ruoyi.project.business.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

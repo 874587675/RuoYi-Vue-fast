@@ -5,6 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table t_sku_sale_attribute_value-->
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="spu_id" jdbcType="INTEGER" property="spuId" />
     <result column="sku_id" jdbcType="INTEGER" property="skuId" />
     <result column="attribute_id" jdbcType="INTEGER" property="attributeId" />
     <result column="attribute_name" jdbcType="VARCHAR" property="attributeName" />
@@ -16,7 +17,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, sku_id, attribute_id, attribute_name, attribute_value, attribute_sort, create_time, 
-    update_time, is_deleted
+    id, spu_id, sku_id, attribute_id, attribute_name, attribute_value, attribute_sort, 
+    create_time, update_time, is_deleted
   </sql>
 </mapper>
