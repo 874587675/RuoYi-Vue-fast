@@ -1,4 +1,3 @@
-# 项目相关配置
 ruoyi:
   # 名称
   name: RuoYi
@@ -17,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8081
+  port: 8080
   servlet:
     # 应用的访问路径
     context-path: /
@@ -145,11 +144,11 @@ spring:
         max-active: 8
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
-  rabbitmq:
-    port: 5672
-    host: 172.25.249.17
-    username: guest
-    password: guest
+#  rabbitmq:
+#    port: 5672
+#    host: 172.25.249.17
+#    username: guest
+#    password: guest
 
 # token配置
 token:
@@ -181,7 +180,7 @@ mybatis-plus:
     db-config:
       id-type: none
       # 配置逻辑删除的字段
-      logic-delete-field-name: is_deleted
+      logic-delete-field: is_deleted
       # 配置逻辑删除的字段值
       logic-delete-value: 1
   configLocation: classpath:mybatis/mybatis-config.xml
@@ -221,6 +220,69 @@ gen:
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: sys_,t_
 
-
-
+#阿里云相关配置(Access要在系统变量中设置)
+aliyun:
+  accessparams:
+    KeyId: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
+    KeySecret: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
+  smsparams:
+    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com 
+    Password: q85238737
+    SignName: 个人博客张广成
+    TemplateCode: SMS_470400116
+    Endpoint: dysmsapi.aliyuncs.com
+    RegionId: cn-qingdao
+  ocrparams:
+    Endpoint: ocr-api.cn-hangzhou.aliyuncs.com
+    RegionId: cn-hangzhou
     
+#支付宝支付相关配置
+alipay:
+  payparams:
+    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}  
+    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY} 
+    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY} 
+    GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do #沙箱环境
+    NotifyUrl: https://www.zgcbuild.top/  #异步通知地址
+    ReturnUrl: https://www.zgcbuild.top/pay/alipay/pc/return  #回调地址
+    SignType: RSA2  #签名类型
+    Charset: utf-8  #字符编码
+    Format: json  #返回格式
+    Version: 1.0  #版本号
+    ProductCode: FAST_INSTANT_TRADE_PAY #产品码 根据使用不同的支付场景更换产品码
+
+#微信支付相关配置
+wxpay:
+  payparams:
+#    MerchantId: 1606444287
+#    AppId: wxff0cf54e2af1fa40
+#    PrivateKeyPath: cert_wxpay/apiclient_key.pem
+#    MerchantSerialNumber: 3581E71E4D77A1EE57D50E8FEB20F3B977C3C386
+#    ApiV3Key: lqozpTpcLhz4NiMfL2o99zFdsI5IkEDv
+#    NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
+#    ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
+    MerchantId: 1638660091  # 商户号
+    AppId: wxc7fa0677f0875535   #AppId
+    PrivateKeyPath: wx/apiclient_key.pem  
+    PublicCertPath: wx/apiclient_cert.pem
+    MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6  #平台序列号
+    ApiV3Key: e3a7f079c2237df57f9923e5258d5172      #v3密钥
+    NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
+    ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
+
+#对象存储相关配置
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: aliyun-oss-1 #默认使用的存储平台
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+    aliyun-oss:
+      - platform: aliyun-oss-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        accessKey: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
+        secretKey: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
+        end-point: oss-cn-hangzhou.aliyuncs.com
+        bucket-name: zgcbuild
+        domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
+        base-path:  zgcbuild/ # 基础路径
+  
+

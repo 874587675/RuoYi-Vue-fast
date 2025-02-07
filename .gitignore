@@ -26,6 +26,7 @@ target/
 *.ipr
 src/main/resources/application-dev.yml
 
+
 ### JRebel ###
 rebel.xml
 ### NetBeans ###

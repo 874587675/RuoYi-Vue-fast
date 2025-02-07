@@ -28,6 +28,11 @@ public class LoginBody
      * 用户手机号
      */
     private String phone;
+    
+    /**
+     * 用户邮箱
+     */
+    private String email;
 
     /**
      * 验证码
