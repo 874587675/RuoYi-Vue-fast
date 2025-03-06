@@ -1,8 +1,9 @@
 package com.ruoyi.project.business.service;
 
-import com.ruoyi.project.business.domain.EsProduct;
 import com.baomidou.mybatisplus.extension.service.IService;
-    /**
+import com.ruoyi.project.business.domain.Product;
+
+/**
 * @program: RuoYi-Vue-fast
 * @ClassName EsProductService
 * @description: 
@@ -10,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @date: 2025-03-06 18:16
 * @Version 1.0
 **/
-public interface EsProductService extends IService<EsProduct>{
+public interface ProductService extends IService<Product>{
 
 
 }

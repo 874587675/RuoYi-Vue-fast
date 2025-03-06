@@ -1,7 +1,7 @@
 package com.ruoyi.project.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ruoyi.project.business.domain.EsProduct;
+import com.ruoyi.project.business.domain.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
 * @Version 1.0
 **/
 @Mapper
-public interface EsProductMapper extends BaseMapper<EsProduct> {
+public interface ProductMapper extends BaseMapper<Product> {
 }

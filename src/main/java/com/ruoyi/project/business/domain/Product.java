@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
 * @program: RuoYi-Vue-fast
@@ -19,12 +20,12 @@ import lombok.NoArgsConstructor;
 * @date: 2025-03-06 18:16
 * @Version 1.0
 **/
-@ApiModel(description="t_es_product")
+@ApiModel(description="t_product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "t_es_product")
-public class EsProduct implements Serializable {
+@TableName(value = "t_product")
+public class Product implements Serializable {
     /**
      * 测试es主键表
      */
