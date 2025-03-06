@@ -16,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 8090
   servlet:
     # 应用的访问路径
     context-path: /
@@ -47,6 +47,7 @@ user:
 
 # Spring配置
 spring:
+  #数据源设置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -106,6 +107,12 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+  #ES配置
+  elasticsearch:
+    rest:
+      connection-timeout: 10s
+      read-timeout: 30s
+      uris: https://192.168.32.128:9200
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -226,7 +233,7 @@ aliyun:
     KeyId: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
     KeySecret: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
   smsparams:
-    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com 
+    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com
     Password: q85238737
     SignName: 个人博客张广成
     TemplateCode: SMS_470400116
@@ -235,13 +242,13 @@ aliyun:
   ocrparams:
     Endpoint: ocr-api.cn-hangzhou.aliyuncs.com
     RegionId: cn-hangzhou
-    
+
 #支付宝支付相关配置
 alipay:
   payparams:
-    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}  
-    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY} 
-    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY} 
+    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}
+    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY}
+    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY}
     GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do #沙箱环境
     NotifyUrl: https://www.zgcbuild.top/  #异步通知地址
     ReturnUrl: https://www.zgcbuild.top/pay/alipay/pc/return  #回调地址
@@ -256,7 +263,7 @@ wxpay:
   payparams:
     MerchantId: 1638660091  # 商户号
     AppId: wxc7fa0677f0875535   #AppId
-    PrivateKeyPath: wx/apiclient_key.pem  
+    PrivateKeyPath: wx/apiclient_key.pem
     PublicCertPath: wx/apiclient_cert.pem
     MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6  #平台序列号
     ApiV3Key: e3a7f079c2237df57f9923e5258d5172      #v3密钥
@@ -276,6 +283,12 @@ dromara:
         end-point: oss-cn-hangzhou.aliyuncs.com
         bucket-name: zgcbuild
         domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
-        base-path:  zgcbuild/ # 基础路径
-  
-
+        base-path: zgcbuild/ # 基础路径
+    minio:
+      - platform: minio-1   #存储平台标识
+        enable-storage: true    #启用存储
+        access-key: EsZbu4Ooej6t9ySd4Y7v
+        secret-key: R96uNPcubWjhgvmbDofFLO2I7VioiwgvOAHNB7Zg
+        end-point: http://172.25.7.39:9000
+        bucket-name: errands
+        domain: http://172.25.7.39:9000/zgc-self/ #访问域名

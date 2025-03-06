@@ -25,10 +25,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private SysUserService sysUserService;
-
     @Autowired
     private SysPasswordService passwordService;
-
     @Autowired
     private SysPermissionService permissionService;
 
@@ -47,11 +45,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         passwordService.validate(user);
         return createLoginUser(user);
-        
     }
     
     public UserDetails createLoginUser(SysUser user) {
         return new LoginUser(user.getUserId(), user.getDeptId(), user, permissionService.getMenuPermission(user));
     }
-
 }

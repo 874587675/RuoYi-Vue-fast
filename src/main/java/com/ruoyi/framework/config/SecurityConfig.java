@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -75,14 +76,20 @@ public class SecurityConfig {
     @Primary
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        DaoAuthenticationProvider customAuthenticationProvider = new DaoAuthenticationProvider();
 
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
 
-        customAuthenticationProvider.setUserDetailsService(customUserDetailsService);
-        customAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        return new ProviderManager(daoAuthenticationProvider,customAuthenticationProvider);
+        return new ProviderManager(daoAuthenticationProvider);
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        DaoAuthenticationProvider customAuthenticationProvider = new DaoAuthenticationProvider();
+//
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+//        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+//
+//        customAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+//        customAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+//        return new ProviderManager(daoAuthenticationProvider,customAuthenticationProvider);
     }
 
 
@@ -130,8 +137,8 @@ public class SecurityConfig {
                                     "/api/**","/pay/**").permitAll()
 //                    requests.antMatchers("/**").permitAll()
 //                    // 静态资源，可匿名访问
-//                    .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
-//                    .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
+                    .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
 //                    // 除上面外的所有请求全部需要鉴权认证
                             .anyRequest().authenticated();
                 })

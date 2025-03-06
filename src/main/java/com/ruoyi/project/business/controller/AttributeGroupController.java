@@ -13,6 +13,4 @@ public class AttributeGroupController {
     @Autowired
     private AttributeGroupService attributeGroupService;
 
-
-
 }
