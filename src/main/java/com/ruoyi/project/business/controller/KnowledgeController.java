@@ -20,8 +20,8 @@ public class KnowledgeController {
      * 修改知识库文件名称
      */
     @PostMapping("/updateDocument")
-    public AjaxResult updateDocument(@RequestBody UpdateDocument updateDocument) throws IOException {
-        return knowledgeService.updateDocument(updateDocument);
+    public AjaxResult updateDocument(@RequestHeader String token,@RequestBody UpdateDocument updateDocument) throws IOException {
+        return knowledgeService.updateDocument(token,updateDocument);
     }
 
     /**

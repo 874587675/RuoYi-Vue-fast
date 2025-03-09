@@ -178,7 +178,7 @@ mybatis-plus:
   global-config:
     # 配置主键策略，自动生成主键
     db-config:
-      id-type: none
+      id-type: auto
       # 配置逻辑删除的字段
       logic-delete-field-name: is_deleted
       # 配置逻辑删除的字段值

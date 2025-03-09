@@ -2,7 +2,6 @@ package com.ruoyi.project.business.service;
 
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.project.business.vo.*;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ public interface KnowledgeService {
     /**
      * 修改知识库文件名称
      */
-    AjaxResult updateDocument(UpdateDocument updateDocument) throws IOException;
+    AjaxResult updateDocument(String token,UpdateDocument updateDocument) throws IOException;
 
     /**
      * 创建知识库文件

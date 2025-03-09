@@ -20,7 +20,7 @@ public class KnowledgeConstant {
     /**
      * 创建和查看知识库((POST)和(GET))
      */
-    public static final String CREATE_LIST_KNOWLEDGE = "https://api.coze.cn/v1/datasets";
+    public static final String CREATE_LIST_KNOWLEDGE = "https://api.coze.cn/v1/datasets?";
 
     /**
      *  修改和删除知识库信息((PUT)和(DELETE))
