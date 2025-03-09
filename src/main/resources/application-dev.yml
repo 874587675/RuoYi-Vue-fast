@@ -16,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 8090
   servlet:
     # 应用的访问路径
     context-path: /
@@ -277,5 +277,6 @@ dromara:
         bucket-name: zgcbuild
         domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
         base-path:  zgcbuild/ # 基础路径
-  
 
+coze:
+  token: "pat_lVI49UuP70wZ5n3dBjsRI9N6dAeweASYL8zg5MmIEPBgOIoxJvglHsSMdpuHZfM7"
