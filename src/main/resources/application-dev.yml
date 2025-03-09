@@ -112,7 +112,9 @@ spring:
     rest:
       connection-timeout: 10s
       read-timeout: 30s
-      uris: https://192.168.32.128:9200
+      uris: http://192.168.32.128:9200
+      username: elastic
+      password: B-XI8WUJ8Xhscv_SVwMh
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -185,7 +187,7 @@ mybatis-plus:
   global-config:
     # 配置主键策略，自动生成主键
     db-config:
-      id-type: none
+      id-type: auto
       # 配置逻辑删除的字段
       logic-delete-field: is_deleted
       # 配置逻辑删除的字段值
@@ -284,11 +286,11 @@ dromara:
         bucket-name: zgcbuild
         domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
         base-path: zgcbuild/ # 基础路径
-    minio:
-      - platform: minio-1   #存储平台标识
-        enable-storage: true    #启用存储
-        access-key: EsZbu4Ooej6t9ySd4Y7v
-        secret-key: R96uNPcubWjhgvmbDofFLO2I7VioiwgvOAHNB7Zg
-        end-point: http://172.25.7.39:9000
-        bucket-name: errands
-        domain: http://172.25.7.39:9000/zgc-self/ #访问域名
+#    minio:
+#      - platform: minio-1   #存储平台标识
+#        enable-storage: true    #启用存储
+#        access-key: EsZbu4Ooej6t9ySd4Y7v
+#        secret-key: R96uNPcubWjhgvmbDofFLO2I7VioiwgvOAHNB7Zg
+#        end-point: http://172.25.7.39:9000
+#        bucket-name: errands
+#        domain: http://172.25.7.39:9000/zgc-self/ #访问域名
