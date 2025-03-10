@@ -15,15 +15,15 @@ public class CreateKnowledge implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "知识库所在的空间的 Space ID")
-    private String spaceId;
+    private String space_id;
 
     @ApiModelProperty(value = "知识库类型，0：文本类型，2：图片类型")
-    private Integer formatType;
+    private Integer format_type;
 
     @ApiModelProperty(value = "知识库描述信息")
     private String description;
 
     @ApiModelProperty(value = "知识库图标，传入上传文件接口中获取的 file_id")
-    private String fileId;
+    private String file_id;
 
 }

@@ -13,5 +13,5 @@ import java.util.List;
 public class ReadDocumentProgress {
 
     @ApiModelProperty(value = "需要获取上传进度的文件 ID。")
-    List<String> documentIds;
+    List<String> document_ids;
 }

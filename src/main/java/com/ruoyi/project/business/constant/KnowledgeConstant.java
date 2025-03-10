@@ -25,12 +25,12 @@ public class KnowledgeConstant {
     /**
      *  修改和删除知识库信息((PUT)和(DELETE))
      */
-    public static final String UPDATE_DELETE_KNOWLEDGE = "https://api.coze.cn/v1/datasets/{dataset_id}";
+    public static final String UPDATE_DELETE_KNOWLEDGE = "https://api.coze.cn/v1/datasets/";
 
     /**
      * 查看知识库文件上传进度(POST)
      */
-    public static final String READ_DOCUMENT_PROGRESS = "https://api.coze.cn/v1/datasets/{dataset_id}/process";
+    public static final String READ_DOCUMENT_PROGRESS = "https://api.coze.cn/v1/datasets/";
 
     /**
      * 查看知识库图片列表(GET)

@@ -14,45 +14,45 @@ public interface KnowledgeService {
     /**
      * 创建知识库文件
      */
-    AjaxResult createDocument(String token, CreateDocument createDocument);
+    AjaxResult createDocument(String token, CreateDocument createDocument) throws IOException;
 
     /**
      * 删除知识库文件
      */
-    AjaxResult deleteDocument(String token, DeleteDocuments deleteDocuments);
+    AjaxResult deleteDocument(String token, DeleteDocuments deleteDocuments) throws IOException;
 
     /**
      *查看知识库文件列表
      */
-    AjaxResult listDocument(String token, ListDocument listDocument);
+    AjaxResult listDocument(String token, ListDocument listDocument) throws IOException;
 
     /**
      * 创建知识库
      */
-    AjaxResult createKnowledge(String token, CreateKnowledge createKnowledge);
+    AjaxResult createKnowledge(String token, CreateKnowledge createKnowledge) throws IOException;
 
     /**
      * 查看知识库列表
      */
-    AjaxResult listKnowledge(String token,String spaceId,String name, String pageNum,String pageSize) throws IOException;
+    AjaxResult listKnowledge(String token,String spaceId,String name, Integer formatType ,Integer pageNum, Integer pageSize) throws IOException;
 
     /**
      * 修改知识库信息
      */
-    AjaxResult updateKnowledge(String token,String datasetId,UpdateKnowledge updateKnowledge);
+    AjaxResult updateKnowledge(String token,String datasetId,UpdateKnowledge updateKnowledge) throws IOException;
 
     /**
      * 删除知识库
      */
-    AjaxResult deleteKnowledge(String token,String datasetId);
+    AjaxResult deleteKnowledge(String token,String datasetId) throws IOException;
 
     /**
      * 查看知识库文件上传进度
      */
-    AjaxResult readDocumentProgress(String token,ReadDocumentProgress readDocumentProgress);
+    AjaxResult readDocumentProgress(String token,String datasetId,ReadDocumentProgress readDocumentProgress) throws IOException;
 
     /**
      * 查看知识库图片列表
      */
-    AjaxResult listPhoto(String token,String datasetId,Integer pageNum,Integer pageSize,String keyword,Boolean hasCaption);
+    AjaxResult listPhoto(String token,String datasetId,Integer pageNum,Integer pageSize,String keyword,Boolean hasCaption) throws IOException;
 }
