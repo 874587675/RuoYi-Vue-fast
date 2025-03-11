@@ -10,8 +10,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReadDocumentProgress {
-
-    @ApiModelProperty(value = "需要获取上传进度的文件 ID。")
-    List<String> documentIds;
+public class PluginIdList {
+    List<PluginIdInfo> idList;
 }

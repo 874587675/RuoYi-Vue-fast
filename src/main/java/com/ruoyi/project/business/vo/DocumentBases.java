@@ -13,8 +13,8 @@ public class DocumentBases {
     private String name;
 
     @ApiModelProperty(value = "上传文件信息")
-    private SourceInfo source_info;
+    private SourceInfo sourceInfo;
 
     @ApiModelProperty(value = "上传文件规则")
-    private UpdateRule update_rule;
+    private UpdateRule updateRule;
 }

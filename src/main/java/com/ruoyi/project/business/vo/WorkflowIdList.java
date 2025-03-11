@@ -10,8 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReadDocumentProgress {
-
-    @ApiModelProperty(value = "需要获取上传进度的文件 ID。")
-    List<String> documentIds;
+public class WorkflowIdList {
+    @ApiModelProperty(value = "智能体的工作流列表配置。")
+    private List<WorkflowIdInfo> ids;
 }

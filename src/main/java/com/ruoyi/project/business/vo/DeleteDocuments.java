@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class DeleteDocuments implements Serializable {
     @ApiModelProperty(value = "待删除的知识库文件列表。数组最大长度为 100，即一次性最多可删除 100 个文件。")
-    List<String> document_ids;
+    List<String> documentIds;
 }

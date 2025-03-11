@@ -4,14 +4,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import org.checkerframework.checker.units.qual.N;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReadDocumentProgress {
-
-    @ApiModelProperty(value = "需要获取上传进度的文件 ID。")
-    List<String> documentIds;
+public class PromptInfo {
+    @ApiModelProperty(value = "智能体的人设与回复逻辑。长度为 0~ 20,000 个字符。默认为空。")
+    private String prompt;
 }
