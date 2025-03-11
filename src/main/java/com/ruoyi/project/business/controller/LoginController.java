@@ -30,57 +30,58 @@ public class LoginController {
         AjaxResult ajax = AjaxResult.success();
         String token = userService.loginByUsername(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());   // 生成令牌
+        ajax.put("code",200);
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
 
-    @ApiOperation("手机号验证码登录")
-    @PostMapping("/loginByPhone")
-    public AjaxResult loginByPhone(@RequestBody LoginBody loginBody) throws ExecutionException, InterruptedException {
-        AjaxResult ajax = AjaxResult.success();
-        String token = userService.loginByPhone(loginBody.getPhone(), loginBody.getCode());// 生成令牌
-        ajax.put(Constants.TOKEN, token);
-        return ajax;
-    }
-
-    @ApiOperation("获取手机验证码")
-    @GetMapping("/getPhoneCode")
-    public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
-        Boolean flag = smsUtil.SendPhoneCodeToLoginOrRegister(phone);
-        if (flag) return R.ok("获取验证码成功");
-        else return R.fail("获取验证码失败");
-    }
-
-    @ApiOperation("使用用户名密码注册")
-    @PostMapping("/registerByUsername")
-    public R<String> registerByUsername(@RequestBody RegisterBody registerBody) {
-        return R.ok(userService.registerByUsername(registerBody.getUsername(), registerBody.getPassword(), registerBody.getCode(),
-                registerBody.getUuid()));
-    }
-
-    @ApiOperation("使用手机号注册")
-    @PostMapping("/registerByPhone")
-    public R<String> registerByPhone(@RequestBody RegisterBody registerBody) {
-        return R.ok(userService.registerByPhone(registerBody.getPhone(), registerBody.getPassword(), registerBody.getCode()));
-    }
-
-    @ApiOperation("使用邮箱注册")
-    @PostMapping("/registerByEmail")
-    public R<String> registerByEmail(@RequestBody RegisterBody registerBody) {
-        return R.ok(userService.registerByEmail(registerBody.getEmail(), registerBody.getPassword(), registerBody.getCode()));
-    }
-    
-    @ApiOperation("查询用户名是否已被使用")
-    @GetMapping("/checkUsername")
-    public R<Boolean> checkUsername(@RequestParam String username) {
-        return R.ok(userService.checkUsername(username));
-    }
-
-    @ApiOperation("查询手机号是否已被使用")
-    @GetMapping("/checkPhone")
-    public R<Boolean> checkPhone(@RequestParam String phone) {return R.ok(userService.checkPhone(phone));}
-
-    @ApiOperation("查询邮箱是否已被使用")
-    @GetMapping("/checkEmail")
-    public R<Boolean> checkEmail(@RequestParam String email) {return R.ok(userService.checkEmail(email));}
+//    @ApiOperation("手机号验证码登录")
+//    @PostMapping("/loginByPhone")
+//    public AjaxResult loginByPhone(@RequestBody LoginBody loginBody) throws ExecutionException, InterruptedException {
+//        AjaxResult ajax = AjaxResult.success();
+//        String token = userService.loginByPhone(loginBody.getPhone(), loginBody.getCode());// 生成令牌
+//        ajax.put(Constants.TOKEN, token);
+//        return ajax;
+//    }
+//
+//    @ApiOperation("获取手机验证码")
+//    @GetMapping("/getPhoneCode")
+//    public R<String> getPhoneCode(@RequestParam String phone) throws ExecutionException, InterruptedException {
+//        Boolean flag = smsUtil.SendPhoneCodeToLoginOrRegister(phone);
+//        if (flag) return R.ok("获取验证码成功");
+//        else return R.fail("获取验证码失败");
+//    }
+//
+//    @ApiOperation("使用用户名密码注册")
+//    @PostMapping("/registerByUsername")
+//    public R<String> registerByUsername(@RequestBody RegisterBody registerBody) {
+//        return R.ok(userService.registerByUsername(registerBody.getUsername(), registerBody.getPassword(), registerBody.getCode(),
+//                registerBody.getUuid()));
+//    }
+//
+//    @ApiOperation("使用手机号注册")
+//    @PostMapping("/registerByPhone")
+//    public R<String> registerByPhone(@RequestBody RegisterBody registerBody) {
+//        return R.ok(userService.registerByPhone(registerBody.getPhone(), registerBody.getPassword(), registerBody.getCode()));
+//    }
+//
+//    @ApiOperation("使用邮箱注册")
+//    @PostMapping("/registerByEmail")
+//    public R<String> registerByEmail(@RequestBody RegisterBody registerBody) {
+//        return R.ok(userService.registerByEmail(registerBody.getEmail(), registerBody.getPassword(), registerBody.getCode()));
+//    }
+//
+//    @ApiOperation("查询用户名是否已被使用")
+//    @GetMapping("/checkUsername")
+//    public R<Boolean> checkUsername(@RequestParam String username) {
+//        return R.ok(userService.checkUsername(username));
+//    }
+//
+//    @ApiOperation("查询手机号是否已被使用")
+//    @GetMapping("/checkPhone")
+//    public R<Boolean> checkPhone(@RequestParam String phone) {return R.ok(userService.checkPhone(phone));}
+//
+//    @ApiOperation("查询邮箱是否已被使用")
+//    @GetMapping("/checkEmail")
+//    public R<Boolean> checkEmail(@RequestParam String email) {return R.ok(userService.checkEmail(email));}
 }

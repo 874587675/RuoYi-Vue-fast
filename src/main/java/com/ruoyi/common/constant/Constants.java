@@ -2,6 +2,7 @@ package com.ruoyi.common.constant;
 
 import java.util.Locale;
 import io.jsonwebtoken.Claims;
+import sun.net.www.content.image.jpeg;
 
 /**
  * 通用常量信息
@@ -10,6 +11,10 @@ import io.jsonwebtoken.Claims;
  */
 public class Constants
 {
+    /**
+     * Base64 jpg前缀
+     */
+    public static final String BASE64_JPG = "data:image/jpeg;base64,";
     /**
      * UTF-8 字符集
      */
@@ -109,6 +114,8 @@ public class Constants
      * 令牌前缀
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
+
+
 
     /**
      * 用户ID
