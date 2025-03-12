@@ -13,7 +13,7 @@ public class UpdateKnowledge {
     private String name;
 
     @ApiModelProperty(value = "知识库图标，传入上传文件接口中获取的 file_id")
-    private String fileId;
+    private String file_id;
 
     @ApiModelProperty(value = "知识库描述信息")
     private String description;

@@ -11,32 +11,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ModelInfoConfig {
     @ApiModelProperty(value = "携带上下文轮数")
-    private int contextRound;
+    private int context_round;
 
     @ApiModelProperty(value = "重复语句惩罚")
-    private double frequencyPenalty;
+    private double frequency_penalty;
 
     @ApiModelProperty(value = "最大回复长度")
-    private int maxTokens;
+    private int max_tokens;
 
     @ApiModelProperty(value = "智能体绑定的模型 ID", required = true)
-    private String modelId;
+    private String model_id;
 
     @ApiModelProperty(value = "重复主题惩罚")
-    private double presencePenalty;
+    private double presence_penalty;
 
     @ApiModelProperty(value = "输出格式" +
             "text：文本。\n" +
             "markdown：Markdown格式。\n" +
             "json：JSON 格式。")
-    private String responseFormat;
+    private String response_format;
 
     @ApiModelProperty(value = "生成随机性")
     private double temperature;
 
     @ApiModelProperty(value = "Top K")
-    private int topK;
+    private int top_k;
 
     @ApiModelProperty(value = "Top P，即累计概率")
-    private double topP;
+    private double top_p;
 }

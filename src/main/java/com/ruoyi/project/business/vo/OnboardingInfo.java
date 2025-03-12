@@ -14,5 +14,5 @@ public class OnboardingInfo {
     @ApiModelProperty(value = "智能体的开场白，长度为 0~300 个字符")
     private String prologue;
     @ApiModelProperty(value = "智能体的开场白预置问题，问题数量不限")
-    private List<String> suggestedQuestions;
+    private List<String> suggested_questions;
 }

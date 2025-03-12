@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PluginIdList {
-    List<PluginIdInfo> idList;
+    List<PluginIdInfo> id_list;
 }

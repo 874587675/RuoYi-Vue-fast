@@ -13,13 +13,13 @@ import java.io.Serializable;
 public class UpdateDocument implements Serializable {
 
     @ApiModelProperty(value = "知识库文件ID")
-    private String documentId;
+    private String document_id;
 
     @ApiModelProperty(value = "知识库文件名称")
-    private String documentName;
+    private String document_name;
 
     @ApiModelProperty(value = "更新知识库文件规则")
-    private UpdateRule updateRule;
+    private UpdateRule update_rule;
 
 }
 

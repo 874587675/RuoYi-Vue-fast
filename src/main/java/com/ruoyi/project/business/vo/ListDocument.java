@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ListDocument implements Serializable {
     @ApiModelProperty(value = "待查看文件的知识库 ID")
-    private String datasetId;
+    private String dataset_id;
 
     @ApiModelProperty(value = "分页查询时的页码，默认为 1")
     private Integer page;
