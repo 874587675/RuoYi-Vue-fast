@@ -53,9 +53,9 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://172.25.249.17:3306/ruoyi_fast?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://localhost:3306/ritual_js?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: 123456
+        password: root
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
@@ -125,13 +125,13 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 172.25.249.17
+    host: localhost
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
     # 密码
-    password:
+    password: 123456
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -226,7 +226,7 @@ aliyun:
     KeyId: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
     KeySecret: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
   smsparams:
-    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com 
+    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com
     Password: q85238737
     SignName: 个人博客张广成
     TemplateCode: SMS_470400116
@@ -256,7 +256,7 @@ wxpay:
   payparams:
     MerchantId: 1638660091  # 商户号
     AppId: wxc7fa0677f0875535   #AppId
-    PrivateKeyPath: wx/apiclient_key.pem  
+    PrivateKeyPath: wx/apiclient_key.pem
     PublicCertPath: wx/apiclient_cert.pem
     MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6  #平台序列号
     ApiV3Key: e3a7f079c2237df57f9923e5258d5172      #v3密钥
@@ -266,7 +266,7 @@ wxpay:
 #对象存储相关配置
 dromara:
   x-file-storage: #文件存储配置
-    default-platform: aliyun-oss-1 #默认使用的存储平台
+    default-platform: minio-1 #默认使用的存储平台
     thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
     aliyun-oss:
       - platform: aliyun-oss-1 # 存储平台标识
@@ -277,3 +277,11 @@ dromara:
         bucket-name: zgcbuild
         domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
         base-path:  zgcbuild/ # 基础路径
+    minio:
+      - platform: minio-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: TwsSeRtNX6Zdtj1pHwE2
+        secret-key: 4AwFnr8Nv8NtxiJhJrmgRaaJISYGkG7cmfgHm4Bo
+        end-point: http://172.25.24.96:9000
+        bucket-name: zgcbuild
+        domain: http://172.25.24.96:9000/zgcbuild/ # 访问域名

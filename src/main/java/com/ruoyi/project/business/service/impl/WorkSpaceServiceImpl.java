@@ -46,15 +46,13 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
         // 发送请求并获取响应
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                System.out.println("查询工作空间请求成功！");
                 ajaxResult.put("code", 200);
                 ajaxResult.put("msg", "查询工作空间请求成功");
-                System.out.println("响应内容: " + response.body().string());
+                ajaxResult.put("data",response.body().string());
             } else {
-                System.out.println("查询工作空间请求失败，状态码: " + response.code());
                 ajaxResult.put("code", 500);
                 ajaxResult.put("msg", "查询工作空间请求失败");
-                System.out.println("错误信息: " + response.body().string());
+                ajaxResult.put("data",response.body().string());
             }
         }
         return ajaxResult;
