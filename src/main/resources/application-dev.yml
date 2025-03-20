@@ -54,7 +54,7 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://172.25.249.17:3306/ruoyi_fast?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://172.25.24.96:3306/ritual_js?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
         password: 123456
       # 从库数据源
@@ -108,13 +108,13 @@ spring:
           config:
             multi-statement-allow: true
   #ES配置
-  elasticsearch:
-    rest:
-      connection-timeout: 10s
-      read-timeout: 30s
-      uris: http://192.168.32.128:9200
-      username: elastic
-      password: B-XI8WUJ8Xhscv_SVwMh
+#  elasticsearch:
+#    rest:
+#      connection-timeout: 10s
+#      read-timeout: 30s
+#      uris: http://192.168.32.128:9200
+#      username: elastic
+#      password: B-XI8WUJ8Xhscv_SVwMh
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -134,7 +134,7 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 172.25.249.17
+    host: 172.25.24.96
     # 端口，默认为6379
     port: 6379
     # 数据库索引
