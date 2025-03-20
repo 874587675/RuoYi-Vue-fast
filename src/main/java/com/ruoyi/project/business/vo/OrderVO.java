@@ -11,5 +11,4 @@ import com.ruoyi.project.business.domain.Order;
  * @Version 1.0
  **/
 public class OrderVO extends Order {
-    private String id;
 }
