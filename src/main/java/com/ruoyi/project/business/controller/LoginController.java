@@ -84,4 +84,7 @@ public class LoginController {
     @GetMapping("/checkEmail")
     public R<Boolean> checkEmail(@RequestParam String email) {return R.ok(userService.checkEmail(email));}
 
+    @ApiOperation("查询测试")
+    @GetMapping("/test")
+    public R<String> test(@RequestParam String email) {return R.ok("测试成功");}
 }
