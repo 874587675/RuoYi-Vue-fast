@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 
 @RequestMapping("/upload")
 @RestController
-@Api(tags = "上传文件模块")
+@Api(tags = "上传文件模块-上传到coze服务器")
 public class UploadController {
     @Resource
     private OssUtil ossUtil;

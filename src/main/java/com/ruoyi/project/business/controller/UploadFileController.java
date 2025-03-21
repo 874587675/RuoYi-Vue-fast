@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/upload")
-@Api(tags = "上传文件管理模块")
+@Api(tags = "上传文件管理模块-上传到自己的服务器")
 public class UploadFileController {
 
     @Resource
