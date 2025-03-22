@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChunkStrategy {
+public class ChunkStrategy implements Serializable {
     // 分段设置相关属性
     @ApiModelProperty("图片知识库的标注方式：\n" +
             "0：（默认）系统自动标注描述信息\n" +

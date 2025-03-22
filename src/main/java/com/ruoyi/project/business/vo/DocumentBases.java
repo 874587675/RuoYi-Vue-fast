@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DocumentBases {
+public class DocumentBases implements Serializable {
     @ApiModelProperty(value = "文件名称")
     private String name;
 

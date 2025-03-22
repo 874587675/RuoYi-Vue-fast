@@ -50,7 +50,7 @@ public class KnowledgeController {
     @ApiOperation("查看知识库文件列表")
     @PostMapping("/listDocument")
     public AjaxResult listDocument(@RequestHeader String token,@RequestBody ListDocument listDocument) throws IOException {
-        return knowledgeService.listDocument(token,listDocument);
+        return knowledgeService.listDocument(token, listDocument);
     }
 
     /**

@@ -28,6 +28,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Request request = new Request.Builder()
                 .url(KnowledgeConstant.UPDATE_DOCUMENT)
                 .addHeader("Authorization", "Bearer " + token)  // 添加认证头部
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Agw-Js-Conv", "str")
                 .post(requestBody)
                 .build();
         // 发送请求并获取响应
@@ -45,7 +47,7 @@ public class KnowledgeServiceImpl implements KnowledgeService {
                 log.info("错误信息: " + string);
                 ajaxResult.put("code", 500);
                 ajaxResult.put("msg", "修改知识库文件请求失败");
-                ajaxResult.put("data",string);
+                ajaxResult.put("data",response);
             }
         }
         return ajaxResult;
@@ -62,6 +64,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Request request = new Request.Builder()
                 .url(KnowledgeConstant.CREATE_DOCUMENT)
                 .addHeader("Authorization", "Bearer " + token)  // 添加认证头部
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Agw-Js-Conv", "str")
                 .post(requestBody)
                 .build();
         // 发送请求并获取响应
@@ -96,6 +100,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Request request = new Request.Builder()
                 .url(KnowledgeConstant.DELETE_DOCUMENT)
                 .addHeader("Authorization", "Bearer " + token)  // 添加认证头部
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Agw-Js-Conv", "str")
                 .post(requestBody)
                 .build();
         // 发送请求并获取响应
@@ -130,6 +136,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Request request = new Request.Builder()
                 .url(KnowledgeConstant.LIST_DOCUMENT)
                 .addHeader("Authorization", "Bearer " + token)  // 添加认证头部
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Agw-Js-Conv", "str")
                 .post(requestBody)
                 .build();
         // 发送请求并获取响应
@@ -299,6 +307,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Request request = new Request.Builder()
                 .url(KnowledgeConstant.READ_DOCUMENT_PROGRESS + datasetId +"/process?")
                 .addHeader("Authorization", "Bearer " + token)  // 添加认证头部
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Agw-Js-Conv", "str")
                 .post(requestBody)
                 .build();
         // 发送请求并获取响应

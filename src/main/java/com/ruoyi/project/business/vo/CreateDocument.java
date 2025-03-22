@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class CreateDocument implements Serializable {
             "通过 Base64 上传本地文件。\n" +
             "上传在线网页。\n" +
             "图片知识库：通过上传文件 API 获取的 file_id 上传图片。")
-    private DocumentBases document_bases;
+    private List<DocumentBases> document_bases;
     @ApiModelProperty(value = "分段设置")
     private ChunkStrategy chunk_strategy;
     @ApiModelProperty(value = "知识库类型。取值包括：\n" +
