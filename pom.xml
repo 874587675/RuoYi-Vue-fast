@@ -31,6 +31,7 @@
         <bitwalker.version>1.21</bitwalker.version>
         <jwt.version>0.9.1</jwt.version>
         <kaptcha.version>2.3.3</kaptcha.version>
+        <swagger.version>3.0.0</swagger.version>
         <swagger.version>3.0.3</swagger.version>
         <poi.version>4.1.2</poi.version>
         <oshi.version>6.6.5</oshi.version>
@@ -54,7 +55,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
         </dependency>
 
         <!-- SpringBoot 拦截器 -->
@@ -167,24 +168,11 @@
             <artifactId>jaxb-api</artifactId>
         </dependency>
 
-        <!-- Swagger3依赖 -->
+        <!-- knife4j依赖 swagger文档-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>${swagger.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- 防止进入swagger页面报类型转换错误，排除3.0.0中的引用，手动增加1.6.2版本 -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>1.6.2</version>
         </dependency>
 
         <!-- 获取系统信息 -->
@@ -241,9 +229,9 @@
 	        <plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
-	            <configuration>
-	                <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
-	            </configuration>
+<!--	            <configuration>-->
+<!--	                <fork>true</fork> &lt;!&ndash; 如果没有该配置，devtools不会生效 &ndash;&gt;-->
+<!--	            </configuration>-->
 	        </plugin>
 	    </plugins>
 	</build>
