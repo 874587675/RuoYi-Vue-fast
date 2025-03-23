@@ -197,3 +197,69 @@ gen:
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
   tablePrefix: sys_,t_
 
+#阿里云相关配置(Access要在系统变量中设置)
+aliyun:
+  accessparams:
+    KeyId: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
+    KeySecret: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
+  smsparams:
+    UserPrincipalName: zgcbuild@1160848283821582.onaliyun.com
+    Password: q85238737
+    SignName: 个人博客张广成
+    TemplateCode: SMS_470400116
+    Endpoint: dysmsapi.aliyuncs.com
+    RegionId: cn-qingdao
+  ocrparams:
+    Endpoint: ocr-api.cn-hangzhou.aliyuncs.com
+    RegionId: cn-hangzhou
+
+#支付宝支付相关配置
+alipay:
+  payparams:
+    AppId: ${ALIBABA_CLOUD_PAY_APP_ID}
+    MerchantPrivateKey: ${ALIBABA_CLOUD_PAY_MERCHANT_PRIVATE_KEY}
+    AlipayPublicKey: ${ALIBABA_CLOUD_PAY_ALIPAY_PUBLIC_KEY}
+    GatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do #沙箱环境
+    NotifyUrl: https://www.zgcbuild.top/  #异步通知地址
+    ReturnUrl: https://www.zgcbuild.top/pay/alipay/pc/return  #回调地址
+    SignType: RSA2  #签名类型
+    Charset: utf-8  #字符编码
+    Format: json  #返回格式
+    Version: 1.0  #版本号
+    ProductCode: FAST_INSTANT_TRADE_PAY #产品码 根据使用不同的支付场景更换产品码
+
+#微信支付相关配置
+wxpay:
+  payparams:
+    MerchantId: 1638660091  # 商户号
+    AppId: wxc7fa0677f0875535   #AppId
+    AppSecret: 0f7296175d55d9a2ed4d5cc318355294
+    PrivateKeyPath: wx/apiclient_key.pem
+    PublicCertPath: wx/apiclient_cert.pem
+    MerchantSerialNumber: 52DB932DAE765A3705DC5287EB438A080F0B67B6  #平台序列号
+    ApiV3Key: e3a7f079c2237df57f9923e5258d5172      #v3密钥
+    NotifyUrl: https://www.zgcbuild.top/api/pay/wx/wxnotify
+    ReturnUrl: https://www.zgcbuild.top/api/pay/wx/wxreturn
+
+#对象存储相关配置
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: aliyun-oss-1 #默认使用的存储平台
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+    aliyun-oss:
+      - platform: minio-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        accessKey: ${ALIBABA_CLOUD_ACCESS_KEY_ID}
+        secretKey: ${ALIBABA_CLOUD_ACCESS_KEY_SECRET}
+        end-point: oss-cn-hangzhou.aliyuncs.com
+        bucket-name: zgcbuild
+        domain: https://zgcbuild.oss-cn-hangzhou.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
+        base-path: zgcbuild/ # 基础路径
+    minio:
+      - platform: minio-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: TwsSeRtNX6Zdtj1pHwE2
+        secret-key: 4AwFnr8Nv8NtxiJhJrmgRaaJISYGkG7cmfgHm4Bo
+        end-point: http://172.25.24.96:9000
+        bucket-name: zgcbuild
+        domain: http://172.25.24.96:9000/zgcbuild/ # 访问域名
