@@ -24,5 +24,5 @@ public class BotConstant {
     /**
      * 查看智能体列表(GET)
      */
-    public static final String GET_PUBLISHED_BOT = "https://api.coze.cn/v1/space/published_bots_list";
+    public static final String GET_PUBLISHED_BOT = "https://api.coze.cn/v1/space/published_bots_list?";
 }

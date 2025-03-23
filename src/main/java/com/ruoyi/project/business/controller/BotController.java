@@ -39,7 +39,7 @@ public class BotController {
         return botService.editBot(token,updateBot);
     }
 
-    @ApiOperation("更新智能体")
+    @ApiOperation("发布智能体")
     @PostMapping("/botPublish")
     public AjaxResult botPublish(@RequestHeader String token, @RequestBody PublishBot publishBot) throws IOException {
         return botService.botPublish(token,publishBot);
